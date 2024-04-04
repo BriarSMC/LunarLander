@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=3 uid="uid://8sy5ghc53xc1"]
+
+[ext_resource type="Texture2D" uid="uid://cd5t0s4a6fgbp" path="res://lander.png" id="1_a1r1k"]
+[ext_resource type="Script" path="res://lander.gd" id="1_ro4j6"]
+[ext_resource type="Script" path="res://Altimeter.gd" id="3_g8tmp"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gcdkp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dlqel"]
+size = Vector2(50, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yw2oe"]
+size = Vector2(10, 13.02)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8mtob"]
+size = Vector2(44, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bk64x"]
+size = Vector2(50, 25)
+
+[node name="Lander" type="RigidBody2D"]
+collision_mask = 8
+physics_material_override = SubResource("PhysicsMaterial_gcdkp")
+script = ExtResource("1_ro4j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_a1r1k")
+
+[node name="BodyCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_dlqel")
+
+[node name="LeftStrutCollider" type="CollisionShape2D" parent="."]
+position = Vector2(-15.0013, 17.0031)
+scale = Vector2(1, 1)
+skew = 0.39968
+shape = SubResource("RectangleShape2D_yw2oe")
+
+[node name="RightStrutCollider" type="CollisionShape2D" parent="."]
+position = Vector2(15, 17)
+scale = Vector2(1, 1)
+skew = -0.39968
+shape = SubResource("RectangleShape2D_yw2oe")
+
+[node name="DetectLanding" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 8
+
+[node name="Struts" type="CollisionShape2D" parent="DetectLanding"]
+position = Vector2(0, 23)
+shape = SubResource("RectangleShape2D_8mtob")
+
+[node name="DetectSideContact" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="Sides" type="CollisionShape2D" parent="DetectSideContact"]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_bk64x")
+
+[node name="Altimeter" type="RayCast2D" parent="."]
+position = Vector2(0, 26)
+target_position = Vector2(0, 10000)
+script = ExtResource("3_g8tmp")
+
+[connection signal="body_entered" from="DetectLanding" to="." method="_on_detect_landing_body_entered"]
+[connection signal="body_entered" from="DetectSideContact" to="." method="_on_detect_side_contact_body_entered"]

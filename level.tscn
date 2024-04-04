@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://s4scnptdtbjt"]
+
+[ext_resource type="PackedScene" uid="uid://8sy5ghc53xc1" path="res://lander.tscn" id="1_e2yw5"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m5n5b"]
+rough = true
+
+[node name="level" type="Node2D"]
+
+[node name="surface" type="StaticBody2D" parent="."]
+position = Vector2(509, 482)
+collision_layer = 8
+collision_mask = 7
+physics_material_override = SubResource("PhysicsMaterial_m5n5b")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="surface"]
+polygon = PackedVector2Array(-535, -57, -347, -65, -292, 48, 662, 47, 665, 174, -530, 193)
+
+[node name="Polygon2D" type="Polygon2D" parent="surface"]
+polygon = PackedVector2Array(-536, -56, -346, -65, -291, 49, 663, 46, 663, 176, -531, 195)
+
+[node name="Lander" parent="." instance=ExtResource("1_e2yw5")]
+position = Vector2(545, 46)
