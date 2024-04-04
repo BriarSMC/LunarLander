@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cd5t0s4a6fgbp" path="res://images/lander.png" id="1_a1r1k"]
 [ext_resource type="Script" path="res://scripts/lander.gd" id="1_ro4j6"]
-[ext_resource type="Script" path="res://scripts/Altimeter.gd" id="3_g8tmp"]
+[ext_resource type="Script" path="res://scripts/Altimeter.gd" id="3_pch7y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gcdkp"]
 
@@ -60,7 +60,7 @@ shape = SubResource("RectangleShape2D_bk64x")
 [node name="Altimeter" type="RayCast2D" parent="."]
 position = Vector2(0, 26)
 target_position = Vector2(0, 10000)
-script = ExtResource("3_g8tmp")
+script = ExtResource("3_pch7y")
 
 [connection signal="body_entered" from="DetectLanding" to="." method="_on_detect_landing_body_entered"]
 [connection signal="body_entered" from="DetectSideContact" to="." method="_on_detect_side_contact_body_entered"]
