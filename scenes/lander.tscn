@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cd5t0s4a6fgbp" path="res://images/lander.png" id="1_a1r1k"]
 [ext_resource type="Script" path="res://scripts/lander.gd" id="1_ro4j6"]
-[ext_resource type="Script" path="res://scripts/Altimeter.gd" id="3_pch7y"]
+[ext_resource type="Script" path="res://scripts/altimeter.gd" id="3_pch7y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gcdkp"]
 

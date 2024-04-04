@@ -1,38 +1,38 @@
 extends Control
 
-signal hudValues (linearVelocity: Vector2, fuelOnBoard: float)
-signal hudAltitude (altitude: float)
+signal hud_values_changed (linearVelocity: Vector2, fuelOnBoard: float)
+signal hud_altitude_changed (altitude: float)
 
-@onready var vvelValue := $HBoxContainer/Values/VerticalVelocity
-@onready var hvelValue := $HBoxContainer/Values/HorzontalVelocity
-@onready var fuelValue := $HBoxContainer/Values/FuelRemaning
+@onready var vvel_value := $HBoxContainer/Values/VerticalVelocity
+@onready var hvel_value := $HBoxContainer/Values/HorzontalVelocity
+@onready var fuel_value := $HBoxContainer/Values/FuelRemaning
 @onready var altitude  := $HBoxContainer/Values/Altitude
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	hudValues.connect(newHudValues)
-	hudAltitude.connect(newAltitude)
+	hud_values_changed.connect(new_hud_values)
+	hud_altitude_changed.connect(new_altitude)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
 
-func newHudValues(vel: Vector2, fuel: float) -> void:
-	var vDir: int = 32
-	var hDir: int = 32
+func new_hud_values(vel: Vector2, fuel: float) -> void:
+	var v_dir: int = 32
+	var h_dir: int = 32
 	if vel.y < 0.0: 
-		vDir = 0x2191
+		v_dir = 0x2191
 	else:
-		vDir = 0x2193
+		v_dir = 0x2193
 	if vel.x > 0:
-		hDir = 0x2192
+		h_dir = 0x2192
 	else:
-		hDir = 0x2190
+		h_dir = 0x2190
 		
-	vvelValue.text = ("%6.1f" % absf(vel.y)) + String.chr(vDir)
-	hvelValue.text = ("%6.1f" % absf(vel.x)) + String.chr(hDir)
-	fuelValue.text = "%6.1f" % fuel
+	vvel_value.text = ("%6.1f" % absf(vel.y)) + String.chr(v_dir)
+	hvel_value.text = ("%6.1f" % absf(vel.x)) + String.chr(h_dir)
+	fuel_value.text = "%6.1f" % fuel
 
-func newAltitude(alt: float) -> void:
+func new_altitude(alt: float) -> void:
 	altitude.text = "%.1f" % alt
