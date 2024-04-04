@@ -1,24 +1,87 @@
+class_name HUD
 extends Control
 
-signal hud_values_changed (linearVelocity: Vector2, fuelOnBoard: float)
+
+#region Description
+# Update HUD (Heads-Up Display) values
+#
+# Scripts in this project update HUD values by emitting the appropriate
+# HUD signals.
+#endregion
+
+
+#region signals, enums, constants, variables, and such
+
+# signals
+
+signal hud_velocity_fuel_changed (linear_velocity: Vector2, fuel_on_board: float)
 signal hud_altitude_changed (altitude: float)
 
+# enums
+
+# constants
+
+# exports (The following properties must be set in the Inspector by the designer)
+
+# public variables
+
+# private variables
+
+# onready variables
+
+# Pointers to HUD components
 @onready var vvel_value := $HBoxContainer/Values/VerticalVelocity
 @onready var hvel_value := $HBoxContainer/Values/HorzontalVelocity
 @onready var fuel_value := $HBoxContainer/Values/FuelRemaning
 @onready var altitude  := $HBoxContainer/Values/Altitude
 
-# Called when the node enters the scene tree for the first time.
+#endregion
+
+
+# Virtual Godot methods
+
+# _ready()
+# Called when node is ready
+#
+# Parameters
+#		None
+# Return
+#		None
+#==
+# Connect to our signal handling functions
 func _ready():
-	hud_values_changed.connect(new_hud_values)
-	hud_altitude_changed.connect(new_altitude)
+	hud_velocity_fuel_changed.connect(_new_velocity_fuel_values)
+	hud_altitude_changed.connect(_new_altitude)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
+# Built-in Signal Callbacks
 
-func new_hud_values(vel: Vector2, fuel: float) -> void:
+
+# Custom Signal Callbacks
+
+
+# Public Methods
+
+
+# Private Methods
+
+# _new_velocity_fuel_valus(vel, fuel)
+# Display velocity and remaining fuel on the HUD
+#
+# Parameters
+#	vel: Vectore2					Velocity to display
+#	fuel: float						Remaining fuel on board
+# Return
+#	None
+#==
+# Step 1: Determine which arrows to display
+#	The HUD uses UNICODE arrow characters as additional information for the
+#	velocity values. Defaults are set to spaces. We then set the appropriate
+#	UNICODE arrow characters based on the vector values.
+# Step 2: Set the HUD label values to the velocity and fuel
+#	Append the appropriate UNICODE arrow characters to the velocity values
+func _new_velocity_fuel_values(vel: Vector2, fuel: float) -> void:
+# Step 1	
 	var v_dir: int = 32
 	var h_dir: int = 32
 	if vel.y < 0.0: 
@@ -29,10 +92,24 @@ func new_hud_values(vel: Vector2, fuel: float) -> void:
 		h_dir = 0x2192
 	else:
 		h_dir = 0x2190
-		
+# Step 2		
 	vvel_value.text = ("%6.1f" % absf(vel.y)) + String.chr(v_dir)
 	hvel_value.text = ("%6.1f" % absf(vel.x)) + String.chr(h_dir)
 	fuel_value.text = "%6.1f" % fuel
 
-func new_altitude(alt: float) -> void:
+
+# _new_altitude(alt)
+# Display altitude on the HUD
+#
+# Parameters
+#	alt: float						Altitude value to display
+# Return
+#	None
+#==
+# Set the HUD label value for altitude
+func _new_altitude(alt: float) -> void:
 	altitude.text = "%.1f" % alt
+
+
+# Subclasses
+

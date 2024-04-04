@@ -35,8 +35,8 @@ func _physics_process(delta):
 	maneuver(delta)
 	
 	# Either one works at this point	
-	#hud.call_deferred("emit_signal", "hud_values_changed", previous_velocity, fuel_remaining)
-	hud.emit_signal("hud_values_changed", previous_velocity, fuel_remaining)
+	#hud.call_deferred("emit_signal", "hud_velocity_fuel_changed", previous_velocity, fuel_remaining)
+	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining)
 
 # We have landed (maybe)
 func _on_detect_landing_body_entered(body):
@@ -72,7 +72,7 @@ func we_crashed(vel: Vector2) -> void:
 	print("we_crashed signal fired")
 	crashed = true
 	$Altimeter.altimeter_stopped.emit()
-	hud.hud_values_changed.emit(vel, fuel_remaining)
+	hud.hud_velocity_fuel_changed.emit(vel, fuel_remaining)
 	print("Crashed")
 	
 	
@@ -80,6 +80,6 @@ func we_landed(vel: Vector2) -> void:
 	print("we_landed signal fired")
 	landed = true
 	$Altimeter.altimeter_stopped.emit()
-	hud.hud_values_changed.emit(vel, fuel_remaining)
+	hud.hud_velocity_fuel_changed.emit(vel, fuel_remaining)
 	print("Landed")
 
