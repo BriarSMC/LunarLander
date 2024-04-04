@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://8sy5ghc53xc1"]
 
-[ext_resource type="Texture2D" uid="uid://cd5t0s4a6fgbp" path="res://lander.png" id="1_a1r1k"]
-[ext_resource type="Script" path="res://lander.gd" id="1_ro4j6"]
-[ext_resource type="Script" path="res://Altimeter.gd" id="3_g8tmp"]
+[ext_resource type="Texture2D" uid="uid://cd5t0s4a6fgbp" path="res://images/lander.png" id="1_a1r1k"]
+[ext_resource type="Script" path="res://scripts/lander.gd" id="1_ro4j6"]
+[ext_resource type="Script" path="res://scripts/Altimeter.gd" id="3_g8tmp"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gcdkp"]
 
@@ -33,13 +33,11 @@ shape = SubResource("RectangleShape2D_dlqel")
 
 [node name="LeftStrutCollider" type="CollisionShape2D" parent="."]
 position = Vector2(-15.0013, 17.0031)
-scale = Vector2(1, 1)
 skew = 0.39968
 shape = SubResource("RectangleShape2D_yw2oe")
 
 [node name="RightStrutCollider" type="CollisionShape2D" parent="."]
 position = Vector2(15, 17)
-scale = Vector2(1, 1)
 skew = -0.39968
 shape = SubResource("RectangleShape2D_yw2oe")
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd5t0s4a6fgbp"
-path="res://.godot/imported/lander.png-4c6ba6e29e2f7cb172210164562c927c.ctex"
+uid="uid://c08cdh6r0bms4"
+path="res://.godot/imported/Ground062S_1K-JPG_Color.jpg-a7e8cb7a5a90146dd5af3032288a8049.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://lander.png"
-dest_files=["res://.godot/imported/lander.png-4c6ba6e29e2f7cb172210164562c927c.ctex"]
+source_file="res://images/Ground062S_1K-JPG_Color.jpg"
+dest_files=["res://.godot/imported/Ground062S_1K-JPG_Color.jpg-a7e8cb7a5a90146dd5af3032288a8049.ctex"]
 
 [params]
 
