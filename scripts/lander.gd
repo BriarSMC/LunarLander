@@ -18,7 +18,7 @@ var previousVelocity: Vector2
 
 @onready var fuelRemaining := fuelOnBoard
 
-@export var HUD: Control
+@export var HUD: Control		# Assigned in the Inspector
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,7 +35,7 @@ func _physics_process(delta):
 	maneuver(delta)
 		
 	#HUD.call_deferred("emit_signal", "hudValues", previousVelocity, fuelRemaining)
-			
+	HUD.call_deferred("emit_signal", "hudValues", previousVelocity, fuelRemaining)			
 
 # We have landed (maybe)
 func _on_detect_landing_body_entered(body):

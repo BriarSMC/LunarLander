@@ -4,9 +4,9 @@ signal hudValues (linearVelocity: Vector2, fuelOnBoard: float)
 signal hudAltitude (altitude: float)
 
 @onready var vvelValue := $HBoxContainer/Values/VerticalVelocity
-@onready var hvelValue := $HBoxContainer/Values/HorizontalVelocity
-@onready var fuelValue := $HBoxContainer/Values/FuelRemaining
-@onready var altitude := $HBoxContainer/Values/Altitude
+@onready var hvelValue := $HBoxContainer/Values/HorzontalVelocity
+@onready var fuelValue := $HBoxContainer/Values/FuelRemaning
+@onready var altitude  := $HBoxContainer/Values/Altitude
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
