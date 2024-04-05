@@ -37,8 +37,8 @@ signal lander_landed (vel: Vector2)
 
 # exports (The following properties must be set in the Inspector by the designer)
 
-@export var max_vertical_velocity := 40.0
-@export var max_horizontal_velocity := 10.0
+@export var max_vertical_velocity := 800.0
+@export var max_horizontal_velocity := 400.0
 @export var fuel_on_board := 1000.0
 @export var engine_burn_rate := 20.0
 @export var directional_burn_rate := 5.0
@@ -56,6 +56,7 @@ signal lander_landed (vel: Vector2)
 var engine_thrust_vector := Vector2(0, - engine_thrust)
 var crashed := false
 var landed := false
+var engines_shutdown := false
 var previous_velocity: Vector2
 
 
@@ -117,19 +118,22 @@ func _physics_process(delta):
 #	None
 #==
 # Step 1: Ignore if we have crashed or landed
-# Step 2: 
+# Step 2: Shut the engines down
+# Step 3: See if we landed safely or crashed
 func _on_detect_landing_body_entered(_body):
 	print("_on_detect_landing signal fired")
 # Step 1
 	if crashed or landed: return
-# Step 2: See if we landed within maximum limits
+# Step 2
+	engines_shutdown = true
+# Step 3: See if we landed within maximum limits
 #	If so, emit we have landed.
 #	If not, emit we have crashed.
-	printt("_on_detect_landing(struts)", "Linear:", linear_velocity, "Prev:", previous_velocity)
+	printt("_on_detect_landing(struts)", "Linear:", linear_velocity, "Prev:", previous_velocity, "Rotation:", rotation_degrees)
 	if (absf(previous_velocity.x) <= max_horizontal_velocity and 
 		absf(previous_velocity.y) <= max_vertical_velocity):
 		printt("if is true -> Linear:", linear_velocity, "Prev:", previous_velocity)
-		emit_signal("lander_landed", linear_velocity)
+		emit_signal("lander_landed", previous_velocity)
 	else:
 		printt("if is false -> Linear:", linear_velocity, "Prev:", previous_velocity)
 		emit_signal("lander_crashed", previous_velocity)
@@ -195,6 +199,7 @@ func we_crashed(vel: Vector2) -> void:
 func we_landed(vel: Vector2) -> void:
 # Step 1
 	print("we_landed signal fired")
+	print("Rotation: ", rotation_degrees)
 	landed = true
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
@@ -215,18 +220,21 @@ func we_landed(vel: Vector2) -> void:
 # Return
 #	None
 #==
-# Step 1: Check for main engine on. If so, 
+# Step 1: Just return if the engines are shutdown
+# Step 2: Check for main engine on. If so, 
 #	o Apply force UP on the lander
 #	o Deplete the fuel accordingly
-# Step 2: Check for thrusters on. If so,
+# Step 3: Check for thrusters on. If so,
 #	o Apply force laterally
 #	o Deplete fuel accordingly
 func _maneuver(delta) -> void:
 # Step 1
+	if engines_shutdown: return
+# Step 2
 	if Input.is_action_pressed("engine_control"):
 		apply_central_impulse(engine_thrust_vector)
 		fuel_remaining -= engine_burn_rate * delta
-# Step 2
+# Step 3
 	var thrusters := Input.get_axis("go_left", "go_right")
 	if  thrusters != 0.0:
 		apply_central_impulse(Vector2(thrusters * directional_thrust, 0.0))
