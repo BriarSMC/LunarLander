@@ -21,7 +21,9 @@ polygon = PackedVector2Array(-535, -57, -347, -65, -292, 48, 662, 47, 665, 174, 
 polygon = PackedVector2Array(-536, -56, -346, -65, -291, 49, 663, 46, 663, 176, -531, 195)
 
 [node name="Lander" parent="." node_paths=PackedStringArray("hud") instance=ExtResource("1_6fapf")]
+editor_description = "Lander Custom sObject"
 position = Vector2(545, 46)
 hud = NodePath("../HUD")
 
 [node name="HUD" parent="." instance=ExtResource("2_w431u")]
+editor_description = "HUD (Heads-Up Display) Custom Object"

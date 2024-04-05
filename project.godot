@@ -11,9 +11,26 @@ config_version=5
 [application]
 
 config/name="LunarLander"
+config/description="The lander has two sources of force in addition to gravity:
+	o Main engine (applies vertical thrust)
+	o Directional thrusters (applies lateral thrust)
+
+The player activates these forces through the player interface.
+Force is either on or off. No proportional force is available.
+Lateral thrust must be negated by applying lateral thrust in 
+the opposite direction. (NOTE: Later versions may provide
+friction from atmosphere to dampen thrust.)
+
+The goal is for the player to land the vehicle safely. This means 
+the vehicle must come in contact with the surface without exceeding
+upper limits for vertical and horizontal thrust. The vehicle must also
+be with a tilt limit. Exceeding these limits means the vehicle has
+crashed. The lander also crashes if one of its sides collides with
+the surface."
+config/version="0.0.1"
 run/main_scene="res://scenes/start_level.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://images/lander.png"
 
 [input]
 
