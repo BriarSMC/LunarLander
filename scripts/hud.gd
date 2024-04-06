@@ -1,5 +1,5 @@
 class_name HUD
-extends Control
+extends CanvasLayer
 
 
 #region Description
@@ -16,6 +16,7 @@ extends Control
 
 signal hud_velocity_fuel_changed (linear_velocity: Vector2, fuel_on_board: float)
 signal hud_altitude_changed (altitude: float)
+signal hud_gameover_changed (message: String, success: bool)
 
 # enums
 
@@ -30,10 +31,11 @@ signal hud_altitude_changed (altitude: float)
 # onready variables
 
 # Pointers to HUD components
-@onready var vvel_value := $HBoxContainer/Values/VerticalVelocity
-@onready var hvel_value := $HBoxContainer/Values/HorzontalVelocity
-@onready var fuel_value := $HBoxContainer/Values/FuelRemaning
-@onready var altitude  := $HBoxContainer/Values/Altitude
+@onready var vvel_value := $UI/HBoxContainer/Values/VerticalVelocity
+@onready var hvel_value := $UI/HBoxContainer/Values/HorzontalVelocity
+@onready var fuel_value := $UI/HBoxContainer/Values/FuelRemaning
+@onready var altitude	:= $UI/HBoxContainer/Values/Altitude
+@onready var gameover 	:= $UI/GameOver
 
 #endregion
 
@@ -52,6 +54,7 @@ signal hud_altitude_changed (altitude: float)
 func _ready():
 	hud_velocity_fuel_changed.connect(_new_velocity_fuel_values)
 	hud_altitude_changed.connect(_new_altitude)
+	hud_gameover_changed.connect(_gameover)
 
 
 # Built-in Signal Callbacks
@@ -108,7 +111,21 @@ func _new_velocity_fuel_values(vel: Vector2, fuel: float) -> void:
 #==
 # Set the HUD label value for altitude
 func _new_altitude(alt: float) -> void:
-	altitude.text = "%.1f" % alt
+	altitude.text = "%.1f" % alt 
+
+# _gameover(message)
+# Display altitude on the HUD
+#
+# Parameters
+#	message: String					Message to display in game over box
+# Return
+#	None
+#==
+# Set the HUD label value for game over
+func _gameover(message: String, success: bool = false) -> void:
+	if success:
+		gameover.add_theme_color_override("font_color", Color.GREEN)
+	gameover.text = message
 
 
 # Subclasses

@@ -2,50 +2,74 @@
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_i2qmi"]
 
-[node name="HUD" type="Control"]
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_i2qmi")
+
+[node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_i2qmi")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -82.5
+offset_right = 82.5
+offset_bottom = 104.0
+grow_horizontal = 2
 
-[node name="Headings" type="VBoxContainer" parent="HBoxContainer"]
+[node name="Headings" type="VBoxContainer" parent="UI/HBoxContainer"]
 layout_mode = 2
 
-[node name="VerticalVelocity" type="Label" parent="HBoxContainer/Headings"]
+[node name="VerticalVelocity" type="Label" parent="UI/HBoxContainer/Headings"]
 layout_mode = 2
 text = "Vertical Velocity:"
 
-[node name="HorizontalVelocity" type="Label" parent="HBoxContainer/Headings"]
+[node name="HorizontalVelocity" type="Label" parent="UI/HBoxContainer/Headings"]
 layout_mode = 2
 text = "Horizontal Velocity:"
 
-[node name="FuelRemaining" type="Label" parent="HBoxContainer/Headings"]
+[node name="FuelRemaining" type="Label" parent="UI/HBoxContainer/Headings"]
 layout_mode = 2
 text = "Fuel Remaining:"
 
-[node name="Altitude" type="Label" parent="HBoxContainer/Headings"]
+[node name="Altitude" type="Label" parent="UI/HBoxContainer/Headings"]
 layout_mode = 2
 text = "Altitude:"
 
-[node name="Values" type="VBoxContainer" parent="HBoxContainer"]
+[node name="Values" type="VBoxContainer" parent="UI/HBoxContainer"]
 layout_mode = 2
 
-[node name="VerticalVelocity" type="Label" parent="HBoxContainer/Values"]
+[node name="VerticalVelocity" type="Label" parent="UI/HBoxContainer/Values"]
+layout_mode = 2
+text = "0"
+
+[node name="HorzontalVelocity" type="Label" parent="UI/HBoxContainer/Values"]
 layout_mode = 2
 
-[node name="HorzontalVelocity" type="Label" parent="HBoxContainer/Values"]
+[node name="FuelRemaning" type="Label" parent="UI/HBoxContainer/Values"]
 layout_mode = 2
 
-[node name="FuelRemaning" type="Label" parent="HBoxContainer/Values"]
+[node name="Altitude" type="Label" parent="UI/HBoxContainer/Values"]
 layout_mode = 2
 
-[node name="Altitude" type="Label" parent="HBoxContainer/Values"]
-layout_mode = 2
+[node name="GameOver" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -21.0
+offset_right = 0.5
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.733333, 0, 0, 1)
+theme_override_font_sizes/font_size = 45

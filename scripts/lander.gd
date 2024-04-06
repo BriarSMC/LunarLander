@@ -33,29 +33,35 @@ signal lander_landed (vel: Vector2)
 
 # enums
 
+enum lander_states {INFLIGHT, LANDED, CRASHED, LEFTSCREEN}
+
 # constants
 
 # exports (The following properties must be set in the Inspector by the designer)
 
-@export var max_vertical_velocity := 800.0
-@export var max_horizontal_velocity := 400.0
+@export var max_vertical_velocity := 400.0
+@export var max_horizontal_velocity := 100.0
 @export var fuel_on_board := 1000.0
 @export var engine_burn_rate := 20.0
 @export var directional_burn_rate := 5.0
 @export var directional_thrust := 10.0
 @export var engine_thrust := 50.0
-# Instead of finding the HUD node at runtime we assign the HUD pointer 
+# Instead of finding the node at runtime we assign the node's pointer 
 # with the Editor Inspector. From the scene containing Lander drag the 
-# HUD node to this exposed variable.
-@export var hud: Control
+# node to this exposed variable.
+@export var hud: CanvasLayer
+@export var left_boundry_marker: Marker2D
 
 # public variables
 
 # private variables
 
 var engine_thrust_vector := Vector2(0, - engine_thrust)
+var lander_state: int = lander_states.INFLIGHT
+var active := true
 var crashed := false
 var landed := false
+var too_high := false
 var engines_shutdown := false
 var previous_velocity: Vector2
 
@@ -89,13 +95,14 @@ func _ready():
 # Return
 #	None
 #==
-# Step 1: Ignore if we have landed or crashed (i.e. no longer flying)
+# Step 1: Ignore if no longer active
 # Step 2: Preserve the previous velocity for HUD purposes
 # Step 3: Accept user inputs to maneuver the lander
 # Step 4: Update the HUD
+# Step 5: Check lander state
 func _physics_process(delta):
 # Step 1
-	if crashed or landed: return
+	if not active: return
 # Step 2
 	printt(" physics_process -> Linear: ", linear_velocity, "   Prev: ", previous_velocity)
 	previous_velocity = linear_velocity
@@ -103,7 +110,12 @@ func _physics_process(delta):
 	_maneuver(delta)
 # Step 4
 	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining)
-
+# Step 5
+	lander_state = _check_lander_state()
+	if lander_state != lander_states.INFLIGHT:
+		active = false
+		game_over()
+	
 
 # Built-in Signal Callbacks
 
@@ -117,13 +129,13 @@ func _physics_process(delta):
 # Return
 #	None
 #==
-# Step 1: Ignore if we have crashed or landed
+# Step 1: Ignore if we not in flight
 # Step 2: Shut the engines down
 # Step 3: See if we landed safely or crashed
 func _on_detect_landing_body_entered(_body):
 	print("_on_detect_landing signal fired")
 # Step 1
-	if crashed or landed: return
+	if lander_state != lander_states.INFLIGHT: return
 # Step 2
 	engines_shutdown = true
 # Step 3: See if we landed within maximum limits
@@ -173,11 +185,12 @@ func _on_detect_side_contact_body_entered(_body):
 #==
 # Step 1: Set flag that we have crashed	
 # Step 2: Tell the Altimeter to stop updating HUD
-# Step 3: Update HUD with velocity and fuel values
+# Step 3: Update HUD 
 func we_crashed(vel: Vector2) -> void:
 # Step 1
 	print("we_crashed signal fired")
 	crashed = true
+	lander_state = lander_states.CRASHED
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
@@ -201,6 +214,7 @@ func we_landed(vel: Vector2) -> void:
 	print("we_landed signal fired")
 	print("Rotation: ", rotation_degrees)
 	landed = true
+	lander_state = lander_states.LANDED
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
@@ -241,5 +255,54 @@ func _maneuver(delta) -> void:
 		fuel_remaining -= directional_burn_rate * delta
 
 
+# _check_lander_state() -> enum:
+# Check to see if we need to end the game.
+# Did lander:
+#	o Still in flight
+#	o Land safely
+#	o Crash
+#	o Go off screen
+#
+# Parameters
+#	None
+# Return
+#	lander_state: enum
+#==
+# Check in order of Severe to Normal and return the appropriate state
+func _check_lander_state() -> int: 
+	if position.y < left_boundry_marker.position.y:
+		too_high = true
+		return lander_states.LEFTSCREEN
+
+	if crashed:
+		return lander_states.CRASHED
+		
+	if landed:
+		return lander_states.LANDED
+		
+	return lander_states.INFLIGHT
+	
+
+
+# game_over()
+# Do whatever is needed when a game is over
+#
+# Parameters
+#	param: type						Description
+# Return
+#	None
+#	value							Description
+#==
+# What the code is doing (steps)
+func game_over() -> void:
+	match lander_state:
+		lander_states.LEFTSCREEN:
+			hud.hud_gameover_changed.emit("Game Over\nYou Flew Into Space", false)
+		lander_states.CRASHED:
+			hud.hud_gameover_changed.emit("Game Over\nYou Crashed!", false)
+		lander_states.LANDED:
+			hud.hud_gameover_changed.emit("You landed safely!", true)
+
+	
 # Subclasses
 

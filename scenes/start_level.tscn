@@ -8,6 +8,14 @@ rough = true
 
 [node name="StartLevel" type="Node2D"]
 
+[node name="Boundries" type="Node2D" parent="."]
+
+[node name="LeftBoundry" type="Marker2D" parent="Boundries"]
+position = Vector2(0, -100)
+
+[node name="RightBoundry" type="Marker2D" parent="Boundries"]
+position = Vector2(3900, -100)
+
 [node name="surface" type="StaticBody2D" parent="."]
 position = Vector2(509, 482)
 collision_layer = 8
@@ -22,10 +30,10 @@ position = Vector2(571, 30)
 scale = Vector2(2.07616, 1)
 polygon = PackedVector2Array(-534.159, -912, -512.966, -913, -511.077, -66.9953, -491.471, -75.6452, -332, -146, -120, 13, 142, 49, 370.963, -162, 509.68, -161, 696.082, 54, 831.91, -169, 895.884, -165, 948.867, 68, 1321.67, 63, 1346.72, -46, 1357.31, -936, 1373.69, -935, 1378.59, 204, 667.097, 202, -531, 195)
 
-[node name="Lander" parent="." node_paths=PackedStringArray("hud") instance=ExtResource("1_6fapf")]
+[node name="Lander" parent="." node_paths=PackedStringArray("hud", "left_boundry_marker") instance=ExtResource("1_6fapf")]
 editor_description = "Lander Custom sObject"
 position = Vector2(261, 46)
 hud = NodePath("../HUD")
+left_boundry_marker = NodePath("../Boundries/LeftBoundry")
 
 [node name="HUD" parent="." instance=ExtResource("2_w431u")]
-editor_description = "HUD (Heads-Up Display) Custom Object"

@@ -24,7 +24,7 @@ signal altimeter_stopped
 
 # private variables
 
-var _hud: Control
+var _hud: CanvasLayer
 var _active := true
 
 # onready variables
