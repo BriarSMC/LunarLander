@@ -60,6 +60,7 @@ shape = SubResource("RectangleShape2D_bk64x")
 [node name="Altimeter" type="RayCast2D" parent="."]
 position = Vector2(0, 26)
 target_position = Vector2(0, 10000)
+collision_mask = 8
 script = ExtResource("3_pch7y")
 
 [connection signal="body_entered" from="DetectLanding" to="." method="_on_detect_landing_body_entered"]

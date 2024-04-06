@@ -46,11 +46,13 @@ enum lander_states {INFLIGHT, LANDED, CRASHED, LEFTSCREEN}
 @export var directional_burn_rate := 5.0
 @export var directional_thrust := 10.0
 @export var engine_thrust := 50.0
+@export var zoom_altitude := 1000.0
 # Instead of finding the node at runtime we assign the node's pointer 
 # with the Editor Inspector. From the scene containing Lander drag the 
 # node to this exposed variable.
 @export var hud: CanvasLayer
 @export var terrain: StaticBody2D
+@export var camera: Camera2D
 
 # public variables
 
@@ -106,7 +108,6 @@ func _physics_process(delta):
 	previous_velocity = linear_velocity
 # Step 3
 	_maneuver(delta)
-	_scroll_screen()
 # Step 4
 	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining)
 # Step 5
@@ -231,6 +232,7 @@ func we_landed(vel: Vector2) -> void:
 # Step 3: Check for thrusters on. If so,
 #	o Apply force laterally
 #	o Deplete fuel accordingly
+# Step 4: Zoom camera if needed
 func _maneuver(delta) -> void:
 # Step 1
 	if engines_shutdown: return
@@ -243,6 +245,11 @@ func _maneuver(delta) -> void:
 	if  thrusters != 0.0:
 		apply_central_impulse(Vector2(thrusters * directional_thrust, 0.0))
 		fuel_remaining -= directional_burn_rate * delta
+# Step 4
+	if $Altimeter.distance < zoom_altitude and camera.zoom.x == 1.0:
+		camera.zoom_in.emit()
+	if $Altimeter.distance >= zoom_altitude and camera.zoom.x != 1.0:
+		camera.zoom_out.emit()
 
 
 # _check_lander_state() -> enum:

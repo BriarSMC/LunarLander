@@ -22,10 +22,13 @@ signal altimeter_stopped
 
 # public variables
 
+var distance: float
+
 # private variables
 
 var _hud: CanvasLayer
 var _active := true
+var _collision_point := Vector2.ZERO
 
 # onready variables
 
@@ -63,13 +66,22 @@ func _process(_delta):
 # Step 1
 	if !_active: return
 # Step 2
-	var origin = global_position
+	var origin = get_parent().global_position
 	var collision_point = get_collision_point()
-	var distance = origin.distance_to(collision_point)
+	if collision_point != _collision_point:
+		_collision_point = collision_point
+		queue_redraw()
+	var _distance = origin.distance_to(collision_point)
 # Step 3
-	_hud.hud_altitude_changed.emit(float(distance))
+	distance = _distance
+	printt(distance, get_parent().position, collision_point)
+	_hud.hud_altitude_changed.emit(float(_distance))
 
 
+func _draw():
+	draw_circle(_collision_point, 0.1, Color.RED)
+	draw_circle(get_parent().position, .1, Color.GREEN)
+	
 # Built-in Signal Callbacks
 
 
