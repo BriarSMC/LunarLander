@@ -11,16 +11,18 @@ rough = true
 [node name="Boundries" type="Node2D" parent="."]
 
 [node name="LeftBoundry" type="Marker2D" parent="Boundries"]
-position = Vector2(0, -100)
+position = Vector2(0, -500)
 
 [node name="RightBoundry" type="Marker2D" parent="Boundries"]
 position = Vector2(3900, -100)
+metadata/_edit_lock_ = true
 
 [node name="surface" type="StaticBody2D" parent="."]
-position = Vector2(509, 482)
+position = Vector2(505, 863)
 collision_layer = 8
 collision_mask = 7
 physics_material_override = SubResource("PhysicsMaterial_m5n5b")
+metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="surface"]
 polygon = PackedVector2Array(-540, -885, -496, -889, -491, -38, -404.71, -56.4553, -121, -116, 325, 45, 869, 79, 1347, -133, 1627, -133, 2015, 84, 2289.78, -137.397, 2431.92, -138.339, 2544, 101, 3314, 96, 3365, -12, 3389, -903, 3425, -904, 3434, 232, -530, 193)
@@ -32,8 +34,10 @@ polygon = PackedVector2Array(-534.159, -912, -512.966, -913, -511.077, -66.9953,
 
 [node name="Lander" parent="." node_paths=PackedStringArray("hud", "left_boundry_marker") instance=ExtResource("1_6fapf")]
 editor_description = "Lander Custom sObject"
-position = Vector2(261, 46)
+position = Vector2(1075, 29)
 hud = NodePath("../HUD")
 left_boundry_marker = NodePath("../Boundries/LeftBoundry")
+
+[node name="Camera2D" type="Camera2D" parent="Lander"]
 
 [node name="HUD" parent="." instance=ExtResource("2_w431u")]

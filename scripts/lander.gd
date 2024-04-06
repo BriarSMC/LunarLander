@@ -97,7 +97,7 @@ func _ready():
 #==
 # Step 1: Ignore if no longer active
 # Step 2: Preserve the previous velocity for HUD purposes
-# Step 3: Accept user inputs to maneuver the lander
+# Step 3: Maneuver the lander
 # Step 4: Update the HUD
 # Step 5: Check lander state
 func _physics_process(delta):
@@ -108,13 +108,15 @@ func _physics_process(delta):
 	previous_velocity = linear_velocity
 # Step 3
 	_maneuver(delta)
+	_scroll_screen()
 # Step 4
 	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining)
 # Step 5
 	lander_state = _check_lander_state()
 	if lander_state != lander_states.INFLIGHT:
 		active = false
-		game_over()
+		sleeping = true
+		_game_over()
 	
 
 # Built-in Signal Callbacks
@@ -294,7 +296,7 @@ func _check_lander_state() -> int:
 #	value							Description
 #==
 # What the code is doing (steps)
-func game_over() -> void:
+func _game_over() -> void:
 	match lander_state:
 		lander_states.LEFTSCREEN:
 			hud.hud_gameover_changed.emit("Game Over\nYou Flew Into Space", false)
@@ -303,6 +305,18 @@ func game_over() -> void:
 		lander_states.LANDED:
 			hud.hud_gameover_changed.emit("You landed safely!", true)
 
+
+# scroll_screen()
+# Scroll the surface if needs be
+#
+# Parameters
+#	None
+# Return
+#	None
+#==
+# What the code is doing (steps)
+func _scroll_screen() -> void:
+	pass
 	
 # Subclasses
 
