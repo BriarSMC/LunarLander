@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://qfg8o8urawvl"]
+
+[ext_resource type="Script" path="res://scripts/surface_polygon.gd" id="1_s4b23"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m5n5b"]
+rough = true
+
+[node name="surface" type="StaticBody2D"]
+position = Vector2(505, 863)
+collision_layer = 8
+collision_mask = 7
+physics_material_override = SubResource("PhysicsMaterial_m5n5b")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-540, -885, -496, -889, -491, -38, -404.71, -56.4553, -121, -116, 325, 45, 869, 79, 1347, -133, 1627, -133, 2015, 84, 2289.78, -137.397, 2431.92, -138.339, 2544, 101, 3314, 96, 3365, -12, 3389, -903, 3425, -904, 3434, 232, -530, 193)
+disabled = true
+
+[node name="SurfacePolygon" type="Polygon2D" parent="."]
+position = Vector2(571, 30)
+scale = Vector2(2.07616, 1)
+polygon = PackedVector2Array(-534.159, -912, -512.966, -913, -511.077, -66.9953, -491.471, -75.6452, -332, -146, -120, 13, 142, 49, 370.963, -162, 509.68, -161, 696.082, 54, 831.91, -169, 895.884, -165, 948.867, 68, 1321.67, 63, 1346.72, -46, 1357.31, -936, 1373.69, -935, 1378.59, 204, 667.097, 202, -531, 195)
+script = ExtResource("1_s4b23")

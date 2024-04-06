@@ -50,7 +50,7 @@ enum lander_states {INFLIGHT, LANDED, CRASHED, LEFTSCREEN}
 # with the Editor Inspector. From the scene containing Lander drag the 
 # node to this exposed variable.
 @export var hud: CanvasLayer
-@export var left_boundry_marker: Marker2D
+@export var terrain: StaticBody2D
 
 # public variables
 
@@ -61,7 +61,6 @@ var lander_state: int = lander_states.INFLIGHT
 var active := true
 var crashed := false
 var landed := false
-var too_high := false
 var engines_shutdown := false
 var previous_velocity: Vector2
 
@@ -104,7 +103,6 @@ func _physics_process(delta):
 # Step 1
 	if not active: return
 # Step 2
-	printt(" physics_process -> Linear: ", linear_velocity, "   Prev: ", previous_velocity)
 	previous_velocity = linear_velocity
 # Step 3
 	_maneuver(delta)
@@ -135,7 +133,6 @@ func _physics_process(delta):
 # Step 2: Shut the engines down
 # Step 3: See if we landed safely or crashed
 func _on_detect_landing_body_entered(_body):
-	print("_on_detect_landing signal fired")
 # Step 1
 	if lander_state != lander_states.INFLIGHT: return
 # Step 2
@@ -143,13 +140,10 @@ func _on_detect_landing_body_entered(_body):
 # Step 3: See if we landed within maximum limits
 #	If so, emit we have landed.
 #	If not, emit we have crashed.
-	printt("_on_detect_landing(struts)", "Linear:", linear_velocity, "Prev:", previous_velocity, "Rotation:", rotation_degrees)
 	if (absf(previous_velocity.x) <= max_horizontal_velocity and 
 		absf(previous_velocity.y) <= max_vertical_velocity):
-		printt("if is true -> Linear:", linear_velocity, "Prev:", previous_velocity)
 		emit_signal("lander_landed", previous_velocity)
 	else:
-		printt("if is false -> Linear:", linear_velocity, "Prev:", previous_velocity)
 		emit_signal("lander_crashed", previous_velocity)
 
 
@@ -170,7 +164,6 @@ func _on_detect_side_contact_body_entered(_body):
 # Step 1
 	if crashed: return
 # Step 2
-	printt("_on_detect_side_contact -> Linear:", linear_velocity, "Prev:", previous_velocity)
 	emit_signal("lander_crashed", previous_velocity)
 
 
@@ -190,14 +183,12 @@ func _on_detect_side_contact_body_entered(_body):
 # Step 3: Update HUD 
 func we_crashed(vel: Vector2) -> void:
 # Step 1
-	print("we_crashed signal fired")
 	crashed = true
 	lander_state = lander_states.CRASHED
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
 	hud.hud_velocity_fuel_changed.emit(vel, fuel_remaining)
-	print("Crashed")
 	
 	
 # we_landed(vel)
@@ -213,15 +204,12 @@ func we_crashed(vel: Vector2) -> void:
 # Step 3: Update HUD with velocity and fuel values
 func we_landed(vel: Vector2) -> void:
 # Step 1
-	print("we_landed signal fired")
-	print("Rotation: ", rotation_degrees)
 	landed = true
 	lander_state = lander_states.LANDED
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
 	hud.hud_velocity_fuel_changed.emit(vel, fuel_remaining)
-	print("Landed")
 	
 # Public Methods
 
@@ -272,8 +260,10 @@ func _maneuver(delta) -> void:
 #==
 # Check in order of Severe to Normal and return the appropriate state
 func _check_lander_state() -> int: 
-	if position.y < left_boundry_marker.position.y:
-		too_high = true
+	if (position.y < -200.0 or
+		position.x < -terrain.get_terrain_width() / 2.0 or 
+		position.x > terrain.get_terrain_width() / 2.0):
+		print("Left Screen at: ", position)
 		return lander_states.LEFTSCREEN
 
 	if crashed:
