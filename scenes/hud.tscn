@@ -13,7 +13,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+[node name="Panel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -135.0
+offset_right = 191.0
+offset_bottom = 125.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -23,39 +33,39 @@ offset_right = 82.5
 offset_bottom = 104.0
 grow_horizontal = 2
 
-[node name="Headings" type="VBoxContainer" parent="UI/HBoxContainer"]
+[node name="Headings" type="VBoxContainer" parent="UI/Panel/HBoxContainer"]
 layout_mode = 2
 
-[node name="VerticalVelocity" type="Label" parent="UI/HBoxContainer/Headings"]
+[node name="VerticalVelocity" type="Label" parent="UI/Panel/HBoxContainer/Headings"]
 layout_mode = 2
 text = "Vertical Velocity:"
 
-[node name="HorizontalVelocity" type="Label" parent="UI/HBoxContainer/Headings"]
+[node name="HorizontalVelocity" type="Label" parent="UI/Panel/HBoxContainer/Headings"]
 layout_mode = 2
 text = "Horizontal Velocity:"
 
-[node name="FuelRemaining" type="Label" parent="UI/HBoxContainer/Headings"]
+[node name="FuelRemaining" type="Label" parent="UI/Panel/HBoxContainer/Headings"]
 layout_mode = 2
 text = "Fuel Remaining:"
 
-[node name="Altitude" type="Label" parent="UI/HBoxContainer/Headings"]
+[node name="Altitude" type="Label" parent="UI/Panel/HBoxContainer/Headings"]
 layout_mode = 2
 text = "Altitude:"
 
-[node name="Values" type="VBoxContainer" parent="UI/HBoxContainer"]
+[node name="Values" type="VBoxContainer" parent="UI/Panel/HBoxContainer"]
 layout_mode = 2
 
-[node name="VerticalVelocity" type="Label" parent="UI/HBoxContainer/Values"]
+[node name="VerticalVelocity" type="Label" parent="UI/Panel/HBoxContainer/Values"]
 layout_mode = 2
 text = "0"
 
-[node name="HorzontalVelocity" type="Label" parent="UI/HBoxContainer/Values"]
+[node name="HorzontalVelocity" type="Label" parent="UI/Panel/HBoxContainer/Values"]
 layout_mode = 2
 
-[node name="FuelRemaning" type="Label" parent="UI/HBoxContainer/Values"]
+[node name="FuelRemaning" type="Label" parent="UI/Panel/HBoxContainer/Values"]
 layout_mode = 2
 
-[node name="Altitude" type="Label" parent="UI/HBoxContainer/Values"]
+[node name="Altitude" type="Label" parent="UI/Panel/HBoxContainer/Values"]
 layout_mode = 2
 
 [node name="GameOver" type="Label" parent="UI"]

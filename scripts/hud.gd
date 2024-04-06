@@ -31,10 +31,10 @@ signal hud_gameover_changed (message: String, success: bool)
 # onready variables
 
 # Pointers to HUD components
-@onready var vvel_value := $UI/HBoxContainer/Values/VerticalVelocity
-@onready var hvel_value := $UI/HBoxContainer/Values/HorzontalVelocity
-@onready var fuel_value := $UI/HBoxContainer/Values/FuelRemaning
-@onready var altitude	:= $UI/HBoxContainer/Values/Altitude
+@onready var vvel_value := $UI/Panel/HBoxContainer/Values/VerticalVelocity
+@onready var hvel_value := $UI/Panel/HBoxContainer/Values/HorzontalVelocity
+@onready var fuel_value := $UI/Panel/HBoxContainer/Values/FuelRemaning
+@onready var altitude	:= $UI/Panel/HBoxContainer/Values/Altitude
 @onready var gameover 	:= $UI/GameOver
 
 #endregion
