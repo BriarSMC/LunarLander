@@ -34,7 +34,7 @@ signal lander_landed (vel: Vector2)
 # enums
 
 enum lander_states {INFLIGHT, LANDED, CRASHED, LEFTSCREEN}
-enum selected_engine {MAIN, LEFT, RIGHT}
+enum selected_engine {MAIN, LEFT, RIGHT, ALL}
 
 # constants
 
@@ -84,9 +84,7 @@ var game_over := false
 func _ready():
 	lander_crashed.connect(we_crashed)
 	lander_landed.connect(we_landed)
-	_engine_flame(selected_engine.MAIN, false)
-	_engine_flame(selected_engine.LEFT, false)
-	_engine_flame(selected_engine.RIGHT, false)
+	_engine_flame(selected_engine.ALL, false)
 
 # _physics_process(delta)
 # Called once per physics frame
@@ -180,12 +178,15 @@ func _on_detect_side_contact_body_entered(_body):
 # Return
 #	None
 #==
-# Step 1: Set flag that we have crashed	
+# Step 1: 
+#	Set flag that we have crashed	
+#	Stop the engines
 # Step 2: Tell the Altimeter to stop updating HUD
 # Step 3: Update HUD 
 func we_crashed(vel: Vector2) -> void:
 # Step 1
 	lander_state = lander_states.CRASHED
+	_engine_flame(selected_engine.ALL, false)
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
@@ -200,12 +201,15 @@ func we_crashed(vel: Vector2) -> void:
 # Return
 #	None
 #==
-# Step 1: Set flag that we have crashed	
+# Step 1: 
+#	Set flag that we have crashed	
+#	Stop the engines
 # Step 2: Tell the Altimeter to stop updating HUD
 # Step 3: Update HUD with velocity and fuel values
 func we_landed(vel: Vector2) -> void:
 # Step 1
 	lander_state = lander_states.LANDED
+	_engine_flame(selected_engine.ALL, false)
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
@@ -314,9 +318,7 @@ func _check_lander_state() -> int:
 func _game_over() -> void:
 	if not sleeping: return
 	game_over = true
-	_engine_flame(selected_engine.MAIN, false)
-	_engine_flame(selected_engine.LEFT, false)
-	_engine_flame(selected_engine.RIGHT, false)
+	_engine_flame(selected_engine.ALL, false)
 	match lander_state:
 		lander_states.LEFTSCREEN:
 			hud.hud_gameover_changed.emit("Game Over\nYou Flew Into Space", false)
@@ -328,17 +330,18 @@ func _game_over() -> void:
 			hud.hud_gameover_changed.emit("You landed safely!", true)
 
 
-# _engine_flame(engine, show)
+# _engine_flame(engine, show = false)
 # Start or stop the main engine animation based on show
 #
 # Parameters
-#	engine: int						1 = Main, 2 = Left thruster, 3 = Right thruster
+#	engine: int						0 = Main, 1 = Left thruster, 2 = Right thruster, 3 = All engines
 #	show: bool						True: Show engine, False: Don't show engine
 # Return
 #	None
 #==
-# What the code is doing (steps)
-func _engine_flame(engine: int, show: bool) -> void:
+# Start/Stop the appropriate engine
+# If ALL, then all engines are stopped regardless of show
+func _engine_flame(engine: int, show: bool = false) -> void:
 	match engine:
 		selected_engine.MAIN:
 			if show:
@@ -361,6 +364,14 @@ func _engine_flame(engine: int, show: bool) -> void:
 				$RightThruster.visible = true
 				$RightThruster.play("thruster_on")
 			else:
+				$RightThruster.visible = false
+				$RightThruster.stop()	
+				
+		selected_engine.ALL:
+				$MainEngine.visible = false
+				$MainEngine.stop()
+				$LeftThruster.visible = false
+				$LeftThruster.stop()	
 				$RightThruster.visible = false
 				$RightThruster.stop()	
 				
