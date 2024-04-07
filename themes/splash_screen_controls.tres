@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://dduospivxw12q"]
+
+[ext_resource type="FontFile" uid="uid://x3bxh5dq0sas" path="res://fonts/Patrick_Hand_SC,Rock_Salt/Patrick_Hand_SC/PatrickHandSC-Regular.ttf" id="1_ifthc"]
+[ext_resource type="StyleBox" uid="uid://cham0fg7tmqkg" path="res://themes/ui_button_normal_flatbox.tres" id="2_jfhgx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y51iu"]
+bg_color = Color(0.945098, 0.835294, 0.227451, 1)
+
+[resource]
+Button/colors/font_color = Color(0, 0.647059, 0.843137, 1)
+Button/colors/font_focus_color = Color(0.0352941, 0.905882, 0.94902, 1)
+Button/colors/font_hover_color = Color(0.0352941, 0.905882, 0.94902, 1)
+Button/colors/font_hover_pressed_color = Color(0.0980392, 0.952941, 0.0588235, 1)
+Button/font_sizes/font_size = 80
+Button/fonts/font = ExtResource("1_ifthc")
+Button/styles/hover = SubResource("StyleBoxFlat_y51iu")
+Button/styles/normal = ExtResource("2_jfhgx")
