@@ -46,8 +46,8 @@ enum selected_engine {MAIN, LEFT, RIGHT, ALL}
 @export var starting_fuel_on_board := 1000.0
 @export var engine_burn_rate := 20.0
 @export var directional_burn_rate := 5.0
-@export var directional_thrust := 10.0
-@export var engine_thrust := 50.0
+@export var directional_thrust := 20.0
+@export var engine_thrust := 50000.0
 @export var zoom_altitude := 200.0
 # Instead of finding the node at runtime we assign the node's pointer 
 # with the Editor Inspector. From the scene containing Lander drag the 
@@ -134,12 +134,15 @@ func _physics_process(delta):
 #	None
 #==
 # Step 1: Ignore if we not in flight
-# Step 2: Shut the engines down
+# Step 2: 
+#	Freeze the HUD
+#	Shut the engines down
 # Step 3: See if we landed safely or crashed
 func _on_detect_landing_body_entered(_body):
 # Step 1
 	if lander_state != lander_states.INFLIGHT: return
 # Step 2
+	hud.hud_freeze_requested.emit()
 	engines_shutdown = true
 # Step 3: See if we landed within maximum limits
 #	If so, emit we have landed.
@@ -163,10 +166,13 @@ func _on_detect_landing_body_entered(_body):
 # Step 1: Ignore if we have already crashed.
 #	However, if we have landed 'safely' then we override it because we may
 #	have rolled during landing, or touched a side while landing.
+#	Shutdown the engines
+#	Freeze the HUD
 # Step 2: Emit that we have crashed
 func _on_detect_side_contact_body_entered(_body):
 # Step 1
 	if lander_state == lander_states.CRASHED: return
+	hud.hud_freeze_requested.emit()
 	engines_shutdown = true
 # Step 2
 	emit_signal("lander_crashed", previous_velocity)
@@ -195,7 +201,7 @@ func we_crashed(vel: Vector2) -> void:
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
-	hud.hud_velocity_fuel_changed.emit(vel, fuel_remaining)
+	hud.hud_velocity_fuel_changed.emit(previous_velocity, fuel_remaining)
 	
 	
 # we_landed(vel)
@@ -218,7 +224,7 @@ func we_landed(vel: Vector2) -> void:
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
-	hud.hud_velocity_fuel_changed.emit(vel, fuel_remaining)
+	hud.hud_velocity_fuel_changed.emit(previous_velocity, fuel_remaining)
 	
 # Public Methods
 
@@ -314,7 +320,7 @@ func _check_lander_state() -> int:
 func _game_over() -> void:
 	if lander_state != lander_states.LEFTSCREEN and not sleeping:
 			return
-	
+	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining)
 	sleeping = true # in case if was LEFTSCREEN
 	$LanderImage.visible = false
 	game_over = true

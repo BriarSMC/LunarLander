@@ -17,6 +17,7 @@ extends CanvasLayer
 signal hud_velocity_fuel_changed (linear_velocity: Vector2, fuel_on_board: float)
 signal hud_altitude_changed (altitude: float)
 signal hud_gameover_changed (message: String, success: bool)
+signal hud_freeze_requested 
 
 # enums
 
@@ -31,6 +32,8 @@ signal hud_gameover_changed (message: String, success: bool)
 # public variables
 
 # private variables
+
+var active = true
 
 # onready variables
 
@@ -63,6 +66,7 @@ func _ready():
 	hud_velocity_fuel_changed.connect(_new_velocity_fuel_values)
 	hud_altitude_changed.connect(_new_altitude)
 	hud_gameover_changed.connect(_gameover)
+	hud_freeze_requested.connect(freeze_hud)
 	
 	gameover_panel.visible = false
 	gameover.add_theme_font_size_override("font_size", 1)
@@ -105,6 +109,7 @@ func _on_quit_pressed():
 # Step 2: Set the HUD label values to the velocity and fuel
 #	Append the appropriate UNICODE arrow characters to the velocity values
 func _new_velocity_fuel_values(vel: Vector2, fuel: float) -> void:
+	if not active: return
 # Step 1	
 	var v_dir: int = 32
 	var h_dir: int = 32
@@ -132,6 +137,7 @@ func _new_velocity_fuel_values(vel: Vector2, fuel: float) -> void:
 #==
 # Set the HUD label value for altitude
 func _new_altitude(alt: float) -> void:
+	if not active: return
 	altitude.text = "%.1f" % alt 
 
 
@@ -186,6 +192,7 @@ func _gameover(message: String, success: bool = false) -> void:
 func start_new_game() -> void:
 	buttons.visible = false
 	gameover_panel.visible = false
+	active = true
 	lander.reset_level_requested.emit()
 
 	
@@ -201,6 +208,19 @@ func start_new_game() -> void:
 func exit_game() -> void:
 	get_tree().quit()
 	
+
+# freeze_hud() -> void:
+# Stop updating the HUD
+#
+# Parameters
+#	None
+# Return
+#	None
+#==
+# What the code is doing (steps)
+func freeze_hud() -> void:
+	active = false
+
 	
 # Subclasses
 
