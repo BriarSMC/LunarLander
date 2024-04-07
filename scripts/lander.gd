@@ -34,6 +34,7 @@ signal lander_landed (vel: Vector2)
 # enums
 
 enum lander_states {INFLIGHT, LANDED, CRASHED, LEFTSCREEN}
+enum selected_engine {MAIN, LEFT, RIGHT}
 
 # constants
 
@@ -83,7 +84,9 @@ var game_over := false
 func _ready():
 	lander_crashed.connect(we_crashed)
 	lander_landed.connect(we_landed)
-	_main_engine(false)
+	_engine_flame(selected_engine.MAIN, false)
+	_engine_flame(selected_engine.LEFT, false)
+	_engine_flame(selected_engine.RIGHT, false)
 
 # _physics_process(delta)
 # Called once per physics frame
@@ -236,14 +239,23 @@ func _maneuver(delta) -> void:
 	if Input.is_action_pressed("engine_control"):
 		apply_central_impulse(engine_thrust_vector)
 		fuel_remaining -= engine_burn_rate * delta
-		_main_engine(true)
+		_engine_flame(selected_engine.MAIN, true)
 	else:
-		_main_engine(false)
+		_engine_flame(selected_engine.MAIN, false)
 # Step 3
 	var thrusters := Input.get_axis("go_left", "go_right")
+	var selected_thruster = 0
+	if thrusters > 0: 
+		selected_thruster = selected_engine.LEFT
+	if thrusters < 0: 
+		selected_thruster = selected_engine.RIGHT
 	if  thrusters != 0.0:
 		apply_central_impulse(Vector2(thrusters * directional_thrust, 0.0))
 		fuel_remaining -= directional_burn_rate * delta
+		_engine_flame(selected_thruster, true)
+	else:
+		_engine_flame(selected_engine.LEFT, false)
+		_engine_flame(selected_engine.RIGHT, false)
 # Step 4
 	if $Altimeter.distance < zoom_altitude and camera.zoom.x == 1.0:
 		#print("Request zoom in at: ", $Altimeter.distance)
@@ -302,7 +314,9 @@ func _check_lander_state() -> int:
 func _game_over() -> void:
 	if not sleeping: return
 	game_over = true
-	_main_engine(false)
+	_engine_flame(selected_engine.MAIN, false)
+	_engine_flame(selected_engine.LEFT, false)
+	_engine_flame(selected_engine.RIGHT, false)
 	match lander_state:
 		lander_states.LEFTSCREEN:
 			hud.hud_gameover_changed.emit("Game Over\nYou Flew Into Space", false)
@@ -314,22 +328,42 @@ func _game_over() -> void:
 			hud.hud_gameover_changed.emit("You landed safely!", true)
 
 
-# _main_engine(show)
+# _engine_flame(engine, show)
 # Start or stop the main engine animation based on show
 #
 # Parameters
+#	engine: int						1 = Main, 2 = Left thruster, 3 = Right thruster
 #	show: bool						True: Show engine, False: Don't show engine
 # Return
 #	None
 #==
 # What the code is doing (steps)
-func _main_engine(show: bool) -> void:
-	if show:
-		$MainEngine.visible = true
-		$MainEngine.play("engine_on")
-	else:
-		$MainEngine.visible = false
-		$MainEngine.stop()
+func _engine_flame(engine: int, show: bool) -> void:
+	match engine:
+		selected_engine.MAIN:
+			if show:
+				$MainEngine.visible = true
+				$MainEngine.play("engine_on")
+			else:
+				$MainEngine.visible = false
+				$MainEngine.stop()
 	
+		selected_engine.LEFT:
+			if show:
+				$LeftThruster.visible = true
+				$LeftThruster.play("thruster_on")
+			else:
+				$LeftThruster.visible = false
+				$LeftThruster.stop()	
+				
+		selected_engine.RIGHT:
+			if show:
+				$RightThruster.visible = true
+				$RightThruster.play("thruster_on")
+			else:
+				$RightThruster.visible = false
+				$RightThruster.stop()	
+				
+				
 # Subclasses
 
