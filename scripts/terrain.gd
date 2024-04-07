@@ -101,8 +101,8 @@ func generate_points() -> Array[Vector2]:
 		loc += randf_range(min_segment_length, max_segment_length)
 		arr.append(Vector2(loc, screen_height - height))
 	
-	arr.append(Vector2(loc, screen_height))
-	arr.append(Vector2(-terrain_width / 2.0, screen_height))
+	arr.append(Vector2(loc, 5000))
+	arr.append(Vector2(-terrain_width / 2.0, 5000))
 	
 	return arr
 	

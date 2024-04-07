@@ -18,11 +18,13 @@ signal altimeter_stopped
 
 # constants
 
+const reset_altitude_value = 9999999.9
+
 # exports (The following properties must be set in the Inspector by the designer)
 
 # public variables
 
-var distance := 999999.9
+var distance := reset_altitude_value
 
 # private variables
 
@@ -88,5 +90,7 @@ func _make_inactive() -> void:
 
 # Public Methods
 
+func reset_altimeter() -> void:
+	distance = reset_altitude_value
 
 # Private Methods

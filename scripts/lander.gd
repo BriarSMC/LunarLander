@@ -268,10 +268,9 @@ func _maneuver(delta) -> void:
 		_engine_flame(selected_engine.LEFT, false)
 		_engine_flame(selected_engine.RIGHT, false)
 # Step 4
-	if $Altimeter.distance < zoom_altitude and camera.zoom.x == 1.0:
-		#print("Request zoom in at: ", $Altimeter.distance)
+	if $Altimeter.distance < zoom_altitude and camera.zoom.x <= 1.0:
 		camera.zoom_in.emit()
-	if $Altimeter.distance >= zoom_altitude and camera.zoom.x != 1.0:
+	if $Altimeter.distance >= zoom_altitude and camera.zoom.x > 1.0:
 		camera.zoom_out.emit()
 
 
@@ -336,6 +335,7 @@ func _game_over() -> void:
 			hud.hud_gameover_changed.emit("Game Over\nYou Flew Into Space", false)
 		lander_states.CRASHED:
 			$Explosion.play("explode")
+			Audioplayer.explosion()
 			$LanderImage.visible = false
 			hud.hud_gameover_changed.emit("Game Over\nYou Crashed!", false)
 		lander_states.LANDED:
@@ -343,7 +343,7 @@ func _game_over() -> void:
 
 
 # _engine_flame(engine, show = false)
-# Start or stop the main engine animation based on show
+# Start or stop the main engine/thruster animation based on show
 #
 # Parameters
 #	engine: int						0 = Main, 1 = Left thruster, 2 = Right thruster, 3 = All engines
@@ -359,25 +359,31 @@ func _engine_flame(engine: int, show: bool = false) -> void:
 			if show:
 				$MainEngine.visible = true
 				$MainEngine.play("engine_on")
+				Audioplayer.engine(true)
 			else:
 				$MainEngine.visible = false
 				$MainEngine.stop()
+				Audioplayer.engine(false)
 	
 		selected_engine.LEFT:
 			if show:
 				$LeftThruster.visible = true
 				$LeftThruster.play("thruster_on")
+				Audioplayer.thruster(true)
 			else:
 				$LeftThruster.visible = false
 				$LeftThruster.stop()	
+				Audioplayer.thruster(false)
 				
 		selected_engine.RIGHT:
 			if show:
 				$RightThruster.visible = true
 				$RightThruster.play("thruster_on")
+				Audioplayer.thruster(true)
 			else:
 				$RightThruster.visible = false
 				$RightThruster.stop()	
+				Audioplayer.thruster(false)
 				
 		selected_engine.ALL:
 				$MainEngine.visible = false
@@ -386,6 +392,8 @@ func _engine_flame(engine: int, show: bool = false) -> void:
 				$LeftThruster.stop()	
 				$RightThruster.visible = false
 				$RightThruster.stop()	
+				Audioplayer.engine(false)
+				Audioplayer.thruster(false)
 				
 				
 # reset_level()
@@ -412,7 +420,8 @@ func reset_level() -> void:
 	linear_velocity = lander_starting_velocity
 	angular_velocity = lander_starting_angular_velocity	
 	_engine_flame(selected_engine.ALL, false)
-	
+	camera.zoom_out.emit()
+	$Altimeter.reset_altimeter()
 	
 # Subclasses
 
