@@ -39,37 +39,39 @@ var play_level := preload("res://scenes/play_level.tscn")
 # Return
 #		None
 #==
-# What the code is doing (steps)
-# NOTE: Child must call super._ready() if it defines own _ready() method
+# Set start button to grab focus
 func _ready() -> void:
-	pass
+	$HBoxContainer/StartGame.grab_focus()
 
 
-# _process(delta)
-# Called once per frame
+# _input(event)
+# Process input events
 #
 # Parameters
-#	delta: float            	Seconds elapsed since last frame
+#	event: InputEvent				What input just happened
 # Return
 #	None
 #==
 # What the code is doing (steps)
-# NOTE: Child must call super._ready() if it defines own _ready() method
-func _process(delta) -> void:
-	pass
+func _input(event) -> void:
+	if event.is_action_pressed("start_game"):
+		start_new_game()
+		
+	if event.is_action_pressed("quit_game"):
+		exit_game()
 
 
 # Built-in Signal Callbacks
 
 
-
+# Change scene to play level when start button pressed
 func _on_start_game_pressed():
-	get_tree().change_scene_to_packed(play_level)
+	start_new_game()
 
 
 
 func _on_quit_game_pressed():
-	get_tree().quit()
+	exit_game()
 	
 	
 ## Custom Signal Callbacks
@@ -80,5 +82,30 @@ func _on_quit_game_pressed():
 
 # Private Methods
 
+# start_new_game()
+# Start a new game
+#
+# Parameters
+#	None
+# Return
+#	None
+#==
+# Switch to the play level scene
+func start_new_game() -> void:
+	get_tree().change_scene_to_packed(play_level)
 
+	
+# exit_game()
+# Exit the game
+#
+# Parameters
+#	None
+# Return
+#	None
+#==
+# TTFN
+func exit_game() -> void:
+	get_tree().quit()
+	
+	
 # Subclasses
