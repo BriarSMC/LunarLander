@@ -47,8 +47,8 @@ extends StaticBody2D
 # Return
 #		None
 #==
-# What the code is doing (steps)
-# NOTE: Child must call super._ready() if it defines own _ready() method
+# Thx to https://github.com/KoBeWi
+# https://github.com/godotengine/godot-proposals/issues/1804
 func _ready() -> void:
 	poly.polygon = generate_points()
 	coll.polygon = poly.polygon
