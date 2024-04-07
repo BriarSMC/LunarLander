@@ -46,11 +46,13 @@ enum lander_states {INFLIGHT, LANDED, CRASHED, LEFTSCREEN}
 @export var directional_burn_rate := 5.0
 @export var directional_thrust := 10.0
 @export var engine_thrust := 50.0
+@export var zoom_altitude := 200.0
 # Instead of finding the node at runtime we assign the node's pointer 
 # with the Editor Inspector. From the scene containing Lander drag the 
 # node to this exposed variable.
 @export var hud: CanvasLayer
 @export var terrain: StaticBody2D
+@export var camera: Camera2D
 
 # public variables
 
@@ -58,9 +60,6 @@ enum lander_states {INFLIGHT, LANDED, CRASHED, LEFTSCREEN}
 
 var engine_thrust_vector := Vector2(0, - engine_thrust)
 var lander_state: int = lander_states.INFLIGHT
-var active := true
-var crashed := false
-var landed := false
 var engines_shutdown := false
 var previous_velocity: Vector2
 
@@ -94,26 +93,20 @@ func _ready():
 # Return
 #	None
 #==
-# Step 1: Ignore if no longer active
-# Step 2: Preserve the previous velocity for HUD purposes
-# Step 3: Maneuver the lander
-# Step 4: Update the HUD
-# Step 5: Check lander state
+# Step 1: Preserve the previous velocity for HUD purposes
+# Step 2: Maneuver the lander
+# Step 3: Update the HUD
+# Step 4: Check lander state
 func _physics_process(delta):
 # Step 1
-	if not active: return
-# Step 2
 	previous_velocity = linear_velocity
-# Step 3
+# Step 2
 	_maneuver(delta)
-	_scroll_screen()
-# Step 4
+# Step 3
 	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining)
-# Step 5
+# Step 4
 	lander_state = _check_lander_state()
 	if lander_state != lander_states.INFLIGHT:
-		active = false
-		sleeping = true
 		_game_over()
 	
 
@@ -133,6 +126,7 @@ func _physics_process(delta):
 # Step 2: Shut the engines down
 # Step 3: See if we landed safely or crashed
 func _on_detect_landing_body_entered(_body):
+	#print("Strut collision")
 # Step 1
 	if lander_state != lander_states.INFLIGHT: return
 # Step 2
@@ -161,8 +155,10 @@ func _on_detect_landing_body_entered(_body):
 #	have rolled during landing, or touched a side while landing.
 # Step 2: Emit that we have crashed
 func _on_detect_side_contact_body_entered(_body):
+	#print("Side body collision")
 # Step 1
-	if crashed: return
+	if lander_state == lander_states.CRASHED: return
+	engines_shutdown = true
 # Step 2
 	emit_signal("lander_crashed", previous_velocity)
 
@@ -183,7 +179,6 @@ func _on_detect_side_contact_body_entered(_body):
 # Step 3: Update HUD 
 func we_crashed(vel: Vector2) -> void:
 # Step 1
-	crashed = true
 	lander_state = lander_states.CRASHED
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
@@ -204,7 +199,6 @@ func we_crashed(vel: Vector2) -> void:
 # Step 3: Update HUD with velocity and fuel values
 func we_landed(vel: Vector2) -> void:
 # Step 1
-	landed = true
 	lander_state = lander_states.LANDED
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
@@ -231,6 +225,7 @@ func we_landed(vel: Vector2) -> void:
 # Step 3: Check for thrusters on. If so,
 #	o Apply force laterally
 #	o Deplete fuel accordingly
+# Step 4: Zoom camera if needed
 func _maneuver(delta) -> void:
 # Step 1
 	if engines_shutdown: return
@@ -243,6 +238,12 @@ func _maneuver(delta) -> void:
 	if  thrusters != 0.0:
 		apply_central_impulse(Vector2(thrusters * directional_thrust, 0.0))
 		fuel_remaining -= directional_burn_rate * delta
+# Step 4
+	if $Altimeter.distance < zoom_altitude and camera.zoom.x == 1.0:
+		#print("Request zoom in at: ", $Altimeter.distance)
+		camera.zoom_in.emit()
+	if $Altimeter.distance >= zoom_altitude and camera.zoom.x != 1.0:
+		camera.zoom_out.emit()
 
 
 # _check_lander_state() -> enum:
@@ -263,16 +264,19 @@ func _check_lander_state() -> int:
 	if (position.y < -200.0 or
 		position.x < -terrain.get_terrain_width() / 2.0 or 
 		position.x > terrain.get_terrain_width() / 2.0):
-		print("Left Screen at: ", position)
+		#print("Left Screen at: ", position)
 		return lander_states.LEFTSCREEN
-
-	if crashed:
-		return lander_states.CRASHED
+	else:
+		return lander_state
 		
-	if landed:
-		return lander_states.LANDED
-		
-	return lander_states.INFLIGHT
+	#
+	#if crashed:
+		#return lander_states.CRASHED
+		#
+	#if landed:
+		#return lander_states.LANDED
+		#
+	#return lander_states.INFLIGHT
 	
 
 
@@ -285,8 +289,11 @@ func _check_lander_state() -> int:
 #	None
 #	value							Description
 #==
-# What the code is doing (steps)
+# Don't do anything until lander stops moving
+# Call HUD depending on what happened
 func _game_over() -> void:
+	if not sleeping: return
+	
 	match lander_state:
 		lander_states.LEFTSCREEN:
 			hud.hud_gameover_changed.emit("Game Over\nYou Flew Into Space", false)
@@ -296,17 +303,6 @@ func _game_over() -> void:
 			hud.hud_gameover_changed.emit("You landed safely!", true)
 
 
-# scroll_screen()
-# Scroll the surface if needs be
-#
-# Parameters
-#	None
-# Return
-#	None
-#==
-# What the code is doing (steps)
-func _scroll_screen() -> void:
-	pass
 	
 # Subclasses
 

@@ -54,7 +54,7 @@ func _ready() -> void:
 	coll.polygon = poly.polygon
 	coll.position = position
 	
-	printt("Width/Height: ", terrain_width, screen_height)
+	#printt("Width/Height: ", terrain_width, screen_height)
 
 
 
@@ -91,7 +91,7 @@ func generate_points() -> Array[Vector2]:
 	var loc := - terrain_width / 2.0
 	var height: float
 	
-	print("First loc: ", loc)
+	#print("First loc: ", loc)
 	height = randf_range(min_segment_height, max_segment_height)
 	arr.append(Vector2(loc, screen_height - height))
 	
