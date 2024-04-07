@@ -11,6 +11,8 @@ extends StaticBody2D
 
 # signals
 
+signal new_terrain_requested
+
 # enums
 
 # constants
@@ -26,6 +28,8 @@ extends StaticBody2D
 # public variables
 
 # private variables
+
+var rand_gen: RandomNumberGenerator
 
 # onready variables
 
@@ -50,9 +54,9 @@ extends StaticBody2D
 # Thx to https://github.com/KoBeWi
 # https://github.com/godotengine/godot-proposals/issues/1804
 func _ready() -> void:
-	poly.polygon = generate_points()
-	coll.polygon = poly.polygon
-	coll.position = position
+	rand_gen = RandomNumberGenerator.new()
+	new_terrain_requested.connect(new_terrain)
+	new_terrain()
 	
 
 # Built-in Signal Callbacks
@@ -69,18 +73,26 @@ func get_terrain_width() -> float:
 	
 # Private Methods
 
+func new_terrain() -> void:
+	rand_gen.randomize()
+	
+	poly.polygon = generate_points()
+	coll.polygon = poly.polygon
+	coll.position = position
+
+	
 func generate_points() -> Array[Vector2]:
 	var arr: Array[Vector2] = []
 	var loc := - terrain_width / 2.0
 	var height: float
 	
-	height = randf_range(min_segment_height, max_segment_height)
+	height = rand_gen.randf_range(min_segment_height, max_segment_height)
 	arr.append(Vector2(loc, screen_height - height))
 	
 	while loc <= terrain_width / 2.0:		
-		if randf_range(0.0, 1.0) > 0.333:
-			height = randf_range(min_segment_height, max_segment_height)
-		loc += randf_range(min_segment_length, max_segment_length)
+		if rand_gen.randf_range(0.0, 1.0) > 0.333:
+			height = rand_gen.randf_range(min_segment_height, max_segment_height)
+		loc += rand_gen.randf_range(min_segment_length, max_segment_length)
 		arr.append(Vector2(loc, screen_height - height))
 	
 	arr.append(Vector2(loc, 5000))

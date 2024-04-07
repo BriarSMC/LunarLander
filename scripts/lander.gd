@@ -402,7 +402,6 @@ func _engine_flame(engine: int, on_off: bool = false) -> void:
 # Set variables
 # Set objects
 func reset_level() -> void:
-	print('Reset Level')
 	fuel_on_board = starting_fuel_on_board
 	lander_state = lander_states.INFLIGHT
 	engines_shutdown = false
@@ -417,6 +416,7 @@ func reset_level() -> void:
 	_engine_flame(selected_engine.ALL, false)
 	camera.zoom_out.emit()
 	$Altimeter.reset_altimeter()
+	terrain.new_terrain_requested.emit()
 	
 # Subclasses
 
