@@ -697,6 +697,7 @@ animations = [{
 [node name="Lander" type="RigidBody2D"]
 collision_mask = 8
 physics_material_override = SubResource("PhysicsMaterial_gcdkp")
+linear_damp_mode = 1
 script = ExtResource("1_ro4j6")
 directional_thrust = 1.0
 
