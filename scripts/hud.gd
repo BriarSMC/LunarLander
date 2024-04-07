@@ -24,6 +24,9 @@ signal hud_gameover_changed (message: String, success: bool)
 
 # exports (The following properties must be set in the Inspector by the designer)
 
+@export var game_over_leave_on_screen_time := 1.0
+@export var buttons_display_delay_time := 0.4
+
 # public variables
 
 # private variables
@@ -163,7 +166,9 @@ func _gameover(message: String, success: bool = false) -> void:
 	tween.tween_method(func(s: int): gameover.add_theme_font_size_override("font_size", s), 1, 160, 1.5)
 # Step 4
 	await tween.finished
+	await get_tree().create_timer(game_over_leave_on_screen_time).timeout
 	gameover_panel.visible = false
+	await get_tree().create_timer(buttons_display_delay_time).timeout	
 	buttons.visible = true
 	play_again.grab_focus()
 	

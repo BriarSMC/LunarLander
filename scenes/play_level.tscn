@@ -1,11 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://s4scnptdtbjt"]
+[gd_scene load_steps=6 format=3 uid="uid://s4scnptdtbjt"]
 
 [ext_resource type="PackedScene" uid="uid://ra0pwppdahxo" path="res://scenes/terrain.tscn" id="1_l3b7c"]
+[ext_resource type="Texture2D" uid="uid://jqms0esh1jf1" path="res://images/milky-way-345458_1920.jpg" id="1_y7r43"]
 [ext_resource type="PackedScene" uid="uid://8sy5ghc53xc1" path="res://scenes/lander.tscn" id="2_agdam"]
 [ext_resource type="Script" path="res://scripts/camera2d.gd" id="3_ciqlb"]
 [ext_resource type="PackedScene" uid="uid://cqci6ggmavg16" path="res://scenes/hud.tscn" id="4_k5bum"]
 
 [node name="PlayLevel" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("1_y7r43")
+centered = false
+offset = Vector2(-150, -400)
 
 [node name="Terrain" parent="." instance=ExtResource("1_l3b7c")]
 
