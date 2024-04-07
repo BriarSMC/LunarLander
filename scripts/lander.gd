@@ -62,7 +62,7 @@ var engine_thrust_vector := Vector2(0, - engine_thrust)
 var lander_state: int = lander_states.INFLIGHT
 var engines_shutdown := false
 var previous_velocity: Vector2
-
+var game_over := false
 
 # onready variables
 
@@ -93,11 +93,14 @@ func _ready():
 # Return
 #	None
 #==
+# Step 0: Ignore if game is over
 # Step 1: Preserve the previous velocity for HUD purposes
 # Step 2: Maneuver the lander
 # Step 3: Update the HUD
 # Step 4: Check lander state
 func _physics_process(delta):
+# Step 0
+	if game_over: return
 # Step 1
 	previous_velocity = linear_velocity
 # Step 2
@@ -293,11 +296,13 @@ func _check_lander_state() -> int:
 # Call HUD depending on what happened
 func _game_over() -> void:
 	if not sleeping: return
-	
+	game_over = true
 	match lander_state:
 		lander_states.LEFTSCREEN:
 			hud.hud_gameover_changed.emit("Game Over\nYou Flew Into Space", false)
 		lander_states.CRASHED:
+			$Explosion.play("explode")
+			$LanderImage.visible = false
 			hud.hud_gameover_changed.emit("Game Over\nYou Crashed!", false)
 		lander_states.LANDED:
 			hud.hud_gameover_changed.emit("You landed safely!", true)

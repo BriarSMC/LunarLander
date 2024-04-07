@@ -9,6 +9,7 @@ collision_mask = 7
 script = ExtResource("1_yy81h")
 
 [node name="Poly" type="Polygon2D" parent="."]
+texture_repeat = 2
 texture = ExtResource("2_ua6m7")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
