@@ -59,7 +59,8 @@ func _ready() -> void:
 #	None
 #==
 # What the code is doing (steps)
-func zoom_camera_in(params) -> void:
+func zoom_camera_in() -> void:
+	#print("Zoom Camera In")
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "zoom", Vector2(3.0, 3.0), 1.0)
 	
@@ -73,7 +74,8 @@ func zoom_camera_in(params) -> void:
 #	None
 #==
 # What the code is doing (steps)
-func zoom_camera_out(params) -> void:
+func zoom_camera_out() -> void:
+	#print("Zoom Camera Out")
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "zoom", Vector2(1.0, 1.0), 1.0)
 	

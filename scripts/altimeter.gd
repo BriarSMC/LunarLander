@@ -22,7 +22,7 @@ signal altimeter_stopped
 
 # public variables
 
-var distance: float
+var distance := 999999.9
 
 # private variables
 
@@ -67,15 +67,10 @@ func _process(_delta):
 	if !_active: return
 # Step 2
 	var origin = get_parent().global_position
-	var collision_point = get_collision_point()
-	if collision_point != _collision_point:
-		_collision_point = collision_point
-		queue_redraw()
-	var _distance = origin.distance_to(collision_point)
+	_collision_point = get_collision_point()
+	distance = origin.distance_to(_collision_point)
 # Step 3
-	distance = _distance
-	printt(distance, get_parent().position, collision_point)
-	_hud.hud_altitude_changed.emit(float(_distance))
+	_hud.hud_altitude_changed.emit(float(distance))
 
 
 func _draw():
