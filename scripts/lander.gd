@@ -47,7 +47,7 @@ enum selected_engine {MAIN, LEFT, RIGHT, ALL}
 @export var engine_burn_rate := 20.0
 @export var directional_burn_rate := 5.0
 @export var directional_thrust := 20.0
-@export var engine_thrust := 50000.0
+@export var engine_thrust := 50.0
 @export var zoom_altitude := 200.0
 # Instead of finding the node at runtime we assign the node's pointer 
 # with the Editor Inspector. From the scene containing Lander drag the 

@@ -698,7 +698,6 @@ animations = [{
 collision_mask = 8
 physics_material_override = SubResource("PhysicsMaterial_gcdkp")
 script = ExtResource("1_ro4j6")
-max_horizontal_velocity = 10.0
 directional_thrust = 1.0
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
