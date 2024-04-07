@@ -137,7 +137,6 @@ func _physics_process(delta):
 # Step 2: Shut the engines down
 # Step 3: See if we landed safely or crashed
 func _on_detect_landing_body_entered(_body):
-	#print("Strut collision")
 # Step 1
 	if lander_state != lander_states.INFLIGHT: return
 # Step 2
@@ -166,7 +165,6 @@ func _on_detect_landing_body_entered(_body):
 #	have rolled during landing, or touched a side while landing.
 # Step 2: Emit that we have crashed
 func _on_detect_side_contact_body_entered(_body):
-	#print("Side body collision")
 # Step 1
 	if lander_state == lander_states.CRASHED: return
 	engines_shutdown = true
@@ -297,16 +295,7 @@ func _check_lander_state() -> int:
 	else:
 		return lander_state
 		
-	#
-	#if crashed:
-		#return lander_states.CRASHED
-		#
-	#if landed:
-		#return lander_states.LANDED
-		#
-	#return lander_states.INFLIGHT
 	
-
 
 # game_over()
 # Do whatever is needed when a game is over

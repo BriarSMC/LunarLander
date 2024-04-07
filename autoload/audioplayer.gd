@@ -7,7 +7,6 @@ extends Node2D
 func engine(on_off: bool) -> void:
 	if on_off:
 		if not engine_player.is_playing(): 
-			print("Engine sound on")
 			engine_player.play()
 	else:
 		engine_player.stop()
@@ -16,7 +15,6 @@ func engine(on_off: bool) -> void:
 func thruster(on_off: bool) -> void:
 	if on_off:
 		if not thruster_player.is_playing(): 
-			print("Thruster sound on")
 			thruster_player.play()
 	else:
 		thruster_player.stop()

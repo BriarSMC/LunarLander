@@ -40,7 +40,6 @@ extends CanvasLayer
 # Set start button to grab focus
 func _ready() -> void:
 	$HBoxContainer/StartGame.grab_focus()
-	print(get_parent().name)
 
 # _input(event)
 # Process input events

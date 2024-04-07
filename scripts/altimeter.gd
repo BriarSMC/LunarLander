@@ -91,7 +91,6 @@ func _make_inactive() -> void:
 # Public Methods
 
 func reset_altimeter() -> void:
-	print("Altimeter reset executed")
 	distance = reset_altitude_value
 	_active = true
 
