@@ -1,9 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://qfg8o8urawvl"]
-
-[ext_resource type="Script" path="res://scripts/surface_polygon.gd" id="1_s4b23"]
+[gd_scene load_steps=3 format=3 uid="uid://cq2hutouitymc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m5n5b"]
 rough = true
+
+[sub_resource type="GDScript" id="GDScript_ave71"]
+script/source = "extends Polygon2D
+
+
+# Thx to https://github.com/KoBeWi
+# https://github.com/godotengine/godot-proposals/issues/1804
+func _ready():
+	var poly := CollisionPolygon2D.new()
+	poly.polygon = polygon
+	poly.position = position
+	get_parent().call_deferred(\"add_child\", poly)
+"
 
 [node name="surface" type="StaticBody2D"]
 position = Vector2(505, 863)
@@ -20,4 +31,4 @@ disabled = true
 position = Vector2(571, 30)
 scale = Vector2(2.07616, 1)
 polygon = PackedVector2Array(-534.159, -912, -512.966, -913, -511.077, -66.9953, -491.471, -75.6452, -332, -146, -120, 13, 142, 49, 370.963, -162, 509.68, -161, 696.082, 54, 831.91, -169, 895.884, -165, 948.867, 68, 1321.67, 63, 1346.72, -46, 1357.31, -936, 1373.69, -935, 1378.59, 204, 667.097, 202, -531, 195)
-script = ExtResource("1_s4b23")
+script = SubResource("GDScript_ave71")
