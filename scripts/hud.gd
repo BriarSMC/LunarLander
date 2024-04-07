@@ -24,6 +24,7 @@ signal hud_gameover_changed (message: String, success: bool)
 
 # exports (The following properties must be set in the Inspector by the designer)
 
+@export var lander: Lander
 @export var game_over_leave_on_screen_time := 1.0
 @export var buttons_display_delay_time := 0.4
 
@@ -183,7 +184,9 @@ func _gameover(message: String, success: bool = false) -> void:
 #==
 # Switch to the play level scene
 func start_new_game() -> void:
-	get_tree().change_scene_to_packed(Preloads.start_game_scene)
+	buttons.visible = false
+	gameover_panel.visible = false
+	lander.reset_level_requested.emit()
 
 	
 # exit_game()

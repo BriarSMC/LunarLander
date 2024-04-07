@@ -28,6 +28,7 @@ extends RigidBody2D
 
 # signals
 
+signal reset_level_requested
 signal lander_crashed (vel: Vector2)
 signal lander_landed (vel: Vector2)
 
@@ -42,7 +43,7 @@ enum selected_engine {MAIN, LEFT, RIGHT, ALL}
 
 @export var max_vertical_velocity := 400.0
 @export var max_horizontal_velocity := 100.0
-@export var fuel_on_board := 1000.0
+@export var starting_fuel_on_board := 1000.0
 @export var engine_burn_rate := 20.0
 @export var directional_burn_rate := 5.0
 @export var directional_thrust := 10.0
@@ -59,16 +60,20 @@ enum selected_engine {MAIN, LEFT, RIGHT, ALL}
 
 # private variables
 
+var fuel_on_board: float
 var engine_thrust_vector := Vector2(0, - engine_thrust)
 var lander_state: int = lander_states.INFLIGHT
 var engines_shutdown := false
 var previous_velocity: Vector2
 var game_over := false
+var fuel_remaining: float
 
 # onready variables
 
-@onready var fuel_remaining := fuel_on_board
-
+@onready var lander_starting_position := position
+@onready var lander_starting_rotation := rotation
+@onready var lander_starting_velocity := linear_velocity
+@onready var lander_starting_angular_velocity := angular_velocity 
 
 # Virtual Godot methods
 
@@ -82,9 +87,11 @@ var game_over := false
 #==
 # Connect to our signals' handling functions
 func _ready():
+	reset_level_requested.connect(reset_level)
 	lander_crashed.connect(we_crashed)
 	lander_landed.connect(we_landed)
-	_engine_flame(selected_engine.ALL, false)
+	reset_level()
+
 
 # _physics_process(delta)
 # Called once per physics frame
@@ -376,5 +383,31 @@ func _engine_flame(engine: int, show: bool = false) -> void:
 				$RightThruster.stop()	
 				
 				
+# reset_level()
+# Reset level for new game
+#
+# Parameters
+#	None
+# Return
+#	None
+#==
+# Set variables
+# Set objects
+func reset_level() -> void:
+	print('Reset Level')
+	fuel_on_board = starting_fuel_on_board
+	lander_state = lander_states.INFLIGHT
+	engines_shutdown = false
+	game_over = false
+	fuel_remaining = fuel_on_board
+	
+	$LanderImage.visible = true
+	position = lander_starting_position
+	rotation = lander_starting_rotation 
+	linear_velocity = lander_starting_velocity
+	angular_velocity = lander_starting_angular_velocity	
+	_engine_flame(selected_engine.ALL, false)
+	
+	
 # Subclasses
 
