@@ -36,7 +36,6 @@ config/icon="res://images/lander.png"
 [autoload]
 
 Preloads="*res://autoload/preloads.gd"
-Audio="res://autoload/audio.gd"
 Audioplayer="*res://autoload/audioplayer.tscn"
 
 [display]

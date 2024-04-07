@@ -57,21 +57,6 @@ func _ready() -> void:
 	#printt("Width/Height: ", terrain_width, screen_height)
 
 
-
-# _process(delta)
-# Called once per frame
-#
-# Parameters
-#	delta: float            	Seconds elapsed since last frame
-# Return
-#	None
-#==
-# What the code is doing (steps)
-# NOTE: Child must call super._ready() if it defines own _ready() method
-func _process(delta) ->void:
-	pass
-
-
 # Built-in Signal Callbacks
 
 
@@ -87,7 +72,7 @@ func get_terrain_width() -> float:
 # Private Methods
 
 func generate_points() -> Array[Vector2]:
-	var arr: Array[Vector2]
+	var arr: Array[Vector2] = []
 	var loc := - terrain_width / 2.0
 	var height: float
 	

@@ -342,7 +342,7 @@ func _game_over() -> void:
 			hud.hud_gameover_changed.emit("You landed safely!", true)
 
 
-# _engine_flame(engine, show = false)
+# _engine_flame(engine, on_off = false)
 # Start or stop the main engine/thruster animation based on show
 #
 # Parameters
@@ -353,10 +353,10 @@ func _game_over() -> void:
 #==
 # Start/Stop the appropriate engine
 # If ALL, then all engines are stopped regardless of show
-func _engine_flame(engine: int, show: bool = false) -> void:
+func _engine_flame(engine: int, on_off: bool = false) -> void:
 	match engine:
 		selected_engine.MAIN:
-			if show:
+			if on_off:
 				$MainEngine.visible = true
 				$MainEngine.play("engine_on")
 				Audioplayer.engine(true)
@@ -366,7 +366,7 @@ func _engine_flame(engine: int, show: bool = false) -> void:
 				Audioplayer.engine(false)
 	
 		selected_engine.LEFT:
-			if show:
+			if on_off:
 				$LeftThruster.visible = true
 				$LeftThruster.play("thruster_on")
 				Audioplayer.thruster(true)
@@ -376,7 +376,7 @@ func _engine_flame(engine: int, show: bool = false) -> void:
 				Audioplayer.thruster(false)
 				
 		selected_engine.RIGHT:
-			if show:
+			if on_off:
 				$RightThruster.visible = true
 				$RightThruster.play("thruster_on")
 				Audioplayer.thruster(true)
