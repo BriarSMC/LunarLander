@@ -198,6 +198,7 @@ func we_crashed(vel: Vector2) -> void:
 # Step 1
 	lander_state = lander_states.CRASHED
 	_engine_flame(selected_engine.ALL, false)
+	camera.zoom_in.emit()
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
