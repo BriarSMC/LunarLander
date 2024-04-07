@@ -1,11 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://s4scnptdtbjt"]
+[gd_scene load_steps=6 format=3 uid="uid://s4scnptdtbjt"]
 
 [ext_resource type="PackedScene" uid="uid://ra0pwppdahxo" path="res://scenes/terrain.tscn" id="1_l3b7c"]
+[ext_resource type="Texture2D" uid="uid://bp45igdc2ayc4" path="res://images/SpaceBackGround.jpg" id="1_nnc8s"]
 [ext_resource type="PackedScene" uid="uid://8sy5ghc53xc1" path="res://scenes/lander.tscn" id="2_agdam"]
 [ext_resource type="Script" path="res://scripts/camera2d.gd" id="3_ciqlb"]
 [ext_resource type="PackedScene" uid="uid://cqci6ggmavg16" path="res://scenes/hud.tscn" id="4_k5bum"]
 
 [node name="PlayLevel" type="Node2D"]
+
+[node name="Background" type="Polygon2D" parent="."]
+texture_repeat = 2
+color = Color(0.545098, 0.121569, 0.843137, 1)
+texture = ExtResource("1_nnc8s")
+polygon = PackedVector2Array(-121826, -52465, 129132, -52566, 128422, 58655, -121927, 54291)
 
 [node name="Terrain" parent="." instance=ExtResource("1_l3b7c")]
 
