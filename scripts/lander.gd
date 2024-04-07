@@ -293,7 +293,7 @@ func _check_lander_state() -> int:
 	if (position.y < -200.0 or
 		position.x < -terrain.get_terrain_width() / 2.0 or 
 		position.x > terrain.get_terrain_width() / 2.0):
-		#print("Left Screen at: ", position)
+		print("Left Screen at: ", position)
 		return lander_states.LEFTSCREEN
 	else:
 		return lander_state
@@ -318,12 +318,17 @@ func _check_lander_state() -> int:
 #	None
 #	value							Description
 #==
-# Don't do anything until lander stops moving
+# Don't do anything until lander stops moving or
+#	we went off an edge somewhere
 # Indicate game is over
 # Stop the engine and thrusters
 # Call HUD depending on what happened
 func _game_over() -> void:
-	if not sleeping: return
+	if lander_state != lander_states.LEFTSCREEN and not sleeping:
+			return
+	
+	sleeping = true # in case if was LEFTSCREEN
+	$LanderImage.visible = false
 	game_over = true
 	_engine_flame(selected_engine.ALL, false)
 	match lander_state:
