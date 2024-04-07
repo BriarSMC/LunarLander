@@ -22,8 +22,6 @@ extends CanvasLayer
 
 # private variables
 
-var play_level := preload("res://scenes/play_level.tscn")
-
 # onready variables
 
 #endregion
@@ -42,7 +40,7 @@ var play_level := preload("res://scenes/play_level.tscn")
 # Set start button to grab focus
 func _ready() -> void:
 	$HBoxContainer/StartGame.grab_focus()
-
+	print(get_parent().name)
 
 # _input(event)
 # Process input events
@@ -92,8 +90,7 @@ func _on_quit_game_pressed():
 #==
 # Switch to the play level scene
 func start_new_game() -> void:
-	get_tree().change_scene_to_packed(play_level)
-
+	get_tree().change_scene_to_packed(Preloads.play_level_scene)
 	
 # exit_game()
 # Exit the game

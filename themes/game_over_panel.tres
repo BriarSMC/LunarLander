@@ -1,0 +1,12 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://byojyqxy7685k"]
+
+[ext_resource type="FontFile" uid="uid://x3bxh5dq0sas" path="res://fonts/Patrick_Hand_SC,Rock_Salt/Patrick_Hand_SC/PatrickHandSC-Regular.ttf" id="1_q3vw1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vs7hj"]
+bg_color = Color(0.858824, 0.780392, 0.454902, 0.14902)
+
+[resource]
+Label/colors/font_color = Color(0.603922, 0.0980392, 0.0980392, 1)
+Label/font_sizes/font_size = 200
+Label/fonts/font = ExtResource("1_q3vw1")
+Panel/styles/panel = SubResource("StyleBoxFlat_vs7hj")

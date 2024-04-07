@@ -3,7 +3,7 @@ extends CanvasLayer
 
 
 #region Description
-# Update HUD (Heads-Up Display) values
+# Update HUD (Heads-Up Display) values for play level
 #
 # Scripts in this project update HUD values by emitting the appropriate
 # HUD signals.
@@ -31,11 +31,15 @@ signal hud_gameover_changed (message: String, success: bool)
 # onready variables
 
 # Pointers to HUD components
-@onready var vvel_value := $UI/Panel/HBoxContainer/Values/VerticalVelocity
-@onready var hvel_value := $UI/Panel/HBoxContainer/Values/HorzontalVelocity
-@onready var fuel_value := $UI/Panel/HBoxContainer/Values/FuelRemaning
-@onready var altitude	:= $UI/Panel/HBoxContainer/Values/Altitude
-@onready var gameover 	:= $UI/GameOver
+@onready var vvel_value 	:= $UI/Panel/HBoxContainer/Values/VerticalVelocity
+@onready var hvel_value 	:= $UI/Panel/HBoxContainer/Values/HorzontalVelocity
+@onready var fuel_value 	:= $UI/Panel/HBoxContainer/Values/FuelRemaning
+@onready var altitude		:= $UI/Panel/HBoxContainer/Values/Altitude
+@onready var gameover_panel := $GameOverPanel
+@onready var gameover 		:= $GameOverPanel/GameOverText
+@onready var buttons 		:= $UI/Buttons
+@onready var play_again 	:= $UI/Buttons/PlayAgain
+@onready var quit			:= $UI/Buttons/Quit
 
 #endregion
 
@@ -55,9 +59,22 @@ func _ready():
 	hud_velocity_fuel_changed.connect(_new_velocity_fuel_values)
 	hud_altitude_changed.connect(_new_altitude)
 	hud_gameover_changed.connect(_gameover)
+	
+	gameover_panel.visible = false
+	gameover.add_theme_font_size_override("font_size", 1)
+	buttons.visible = false
 
 
 # Built-in Signal Callbacks
+
+# Display the start_game scene
+func _on_play_again_pressed():
+	start_new_game()
+
+
+# Just exit the game
+func _on_quit_pressed():
+	exit_game()
 
 
 # Custom Signal Callbacks
@@ -113,20 +130,69 @@ func _new_velocity_fuel_values(vel: Vector2, fuel: float) -> void:
 func _new_altitude(alt: float) -> void:
 	altitude.text = "%.1f" % alt 
 
-# _gameover(message)
-# Display altitude on the HUD
+
+# _gameover(message, success)
+# Display end of game sequence
 #
 # Parameters
 #	message: String					Message to display in game over box
+#	success: bool					If true, make text green
 # Return
 #	None
 #==
-# Set the HUD label value for game over
+# Step 1: If success is true then change default text color to green
+# Step 2: Set text in UI to message
+# Step 3: Display the game over text
+#	We hide the panel and set the font size to 1 in _ready()
+#	Make the panel visible
+#	Use a tween to increase the size of the text
+# Step 4: Display the buttons
+#	We hide the buttons in _ready()
+#	Wait for the tween to finish
+#	Hide the panel
+#	Display the buttons
 func _gameover(message: String, success: bool = false) -> void:
+# Step 1
 	if success:
 		gameover.add_theme_color_override("font_color", Color.GREEN)
+# Step 2
 	gameover.text = message
+# Step 3	
+	gameover_panel.visible = true
+	var tween = get_tree().create_tween()
+	tween.tween_method(func(s: int): gameover.add_theme_font_size_override("font_size", s), 1, 160, 1.5)
+# Step 4
+	await tween.finished
+	gameover_panel.visible = false
+	buttons.visible = true
+	play_again.grab_focus()
+	
 
+# start_new_game()
+# Start a new game
+#
+# Parameters
+#	None
+# Return
+#	None
+#==
+# Switch to the play level scene
+func start_new_game() -> void:
+	get_tree().change_scene_to_packed(Preloads.start_game_scene)
 
+	
+# exit_game()
+# Exit the game
+#
+# Parameters
+#	None
+# Return
+#	None
+#==
+# TTFN
+func exit_game() -> void:
+	get_tree().quit()
+	
+	
 # Subclasses
 

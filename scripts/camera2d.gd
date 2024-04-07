@@ -3,7 +3,7 @@ extends Camera2D
 
 
 #region Description
-# <description>
+# Turn the game into a side-scroller by attaching this camera to the lander
 #endregion
 
 
