@@ -83,7 +83,7 @@ var game_over := false
 func _ready():
 	lander_crashed.connect(we_crashed)
 	lander_landed.connect(we_landed)
-
+	_main_engine(false)
 
 # _physics_process(delta)
 # Called once per physics frame
@@ -236,6 +236,9 @@ func _maneuver(delta) -> void:
 	if Input.is_action_pressed("engine_control"):
 		apply_central_impulse(engine_thrust_vector)
 		fuel_remaining -= engine_burn_rate * delta
+		_main_engine(true)
+	else:
+		_main_engine(false)
 # Step 3
 	var thrusters := Input.get_axis("go_left", "go_right")
 	if  thrusters != 0.0:
@@ -293,10 +296,13 @@ func _check_lander_state() -> int:
 #	value							Description
 #==
 # Don't do anything until lander stops moving
+# Indicate game is over
+# Stop the engine and thrusters
 # Call HUD depending on what happened
 func _game_over() -> void:
 	if not sleeping: return
 	game_over = true
+	_main_engine(false)
 	match lander_state:
 		lander_states.LEFTSCREEN:
 			hud.hud_gameover_changed.emit("Game Over\nYou Flew Into Space", false)
@@ -308,6 +314,22 @@ func _game_over() -> void:
 			hud.hud_gameover_changed.emit("You landed safely!", true)
 
 
+# _main_engine(show)
+# Start or stop the main engine animation based on show
+#
+# Parameters
+#	show: bool						True: Show engine, False: Don't show engine
+# Return
+#	None
+#==
+# What the code is doing (steps)
+func _main_engine(show: bool) -> void:
+	if show:
+		$MainEngine.visible = true
+		$MainEngine.play("engine_on")
+	else:
+		$MainEngine.visible = false
+		$MainEngine.stop()
 	
 # Subclasses
 
