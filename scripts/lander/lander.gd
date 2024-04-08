@@ -29,8 +29,10 @@ extends RigidBody2D
 # signals
 
 signal reset_level_requested
-signal lander_crashed (vel: Vector2)
-signal lander_landed (vel: Vector2)
+signal lander_crashed 
+signal lander_landed 
+signal landing_sensed (body)
+signal crash_sensed (body)
 
 # enums
 
@@ -50,6 +52,7 @@ signal lander_landed (vel: Vector2)
 # with the Editor Inspector. From the scene containing Lander drag the 
 # node to this exposed variable.
 @export var hud: CanvasLayer
+@export var start_pos: Marker2D
 
 # These are pointers to the lander used by:
 #	Maneuver
@@ -69,10 +72,12 @@ var previous_velocity: Vector2
 var game_over := false
 var fuel_remaining: float
 
+var lander_image0 = preload("res://images/landers/lander.png")
+
+
 
 # onready variables
-
-@onready var lander_starting_position := position
+@onready var lander_starting_position := start_pos.position
 @onready var lander_starting_rotation := rotation
 @onready var lander_starting_velocity := linear_velocity
 @onready var lander_starting_angular_velocity := angular_velocity 
@@ -98,6 +103,8 @@ func _ready():
 	reset_level_requested.connect(reset_level)
 	lander_crashed.connect(we_crashed)
 	lander_landed.connect(we_landed)
+	landing_sensed.connect(_on_detect_landing_body_entered)
+	crash_sensed.connect(_on_detect_landing_body_entered)
 	reset_level()
 
 
@@ -159,9 +166,9 @@ func _on_detect_landing_body_entered(_body):
 #	If not, emit we have crashed.
 	if (absf(previous_velocity.x) <= max_horizontal_velocity and 
 		absf(previous_velocity.y) <= max_vertical_velocity):
-		emit_signal("lander_landed", previous_velocity)
+		emit_signal("lander_landed")
 	else:
-		emit_signal("lander_crashed", previous_velocity)
+		emit_signal("lander_crashed")
 
 
 # _on_detect_side_contact_body_entered(body)
@@ -185,7 +192,7 @@ func _on_detect_side_contact_body_entered(_body):
 	hud.hud_freeze_requested.emit()
 	engines_shutdown = true
 # Step 2
-	emit_signal("lander_crashed", previous_velocity)
+	emit_signal("lander_crashed")
 
 
 # Custom Signal Callbacks
@@ -204,7 +211,7 @@ func _on_detect_side_contact_body_entered(_body):
 #	Stop the engines
 # Step 2: Tell the Altimeter to stop updating HUD
 # Step 3: Update HUD 
-func we_crashed(vel: Vector2) -> void:
+func we_crashed() -> void:
 # Step 1
 	lander_state = Constant.lander_states.CRASHED
 	engine_flame.throttle(Constant.selected_engine.ALL, false)
@@ -228,7 +235,7 @@ func we_crashed(vel: Vector2) -> void:
 #	Stop the engines
 # Step 2: Tell the Altimeter to stop updating HUD
 # Step 3: Update HUD with velocity and fuel values
-func we_landed(vel: Vector2) -> void:
+func we_landed() -> void:
 # Step 1
 	lander_state = Constant.lander_states.LANDED
 	engine_flame.throttle(Constant.selected_engine.ALL, false)
