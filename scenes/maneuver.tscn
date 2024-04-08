@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://chh1fj8l7wkfu"]
 
-[ext_resource type="Script" path="res://scripts/maneuver.gd" id="1_dareu"]
+[ext_resource type="Script" path="res://scripts/lander/maneuver.gd" id="1_dareu"]
 
 [node name="Maneuver" type="Node2D"]
 script = ExtResource("1_dareu")

@@ -1,13 +1,13 @@
 [gd_scene load_steps=109 format=3 uid="uid://8sy5ghc53xc1"]
 
 [ext_resource type="Texture2D" uid="uid://cd5t0s4a6fgbp" path="res://images/lander.png" id="1_a1r1k"]
-[ext_resource type="Script" path="res://scripts/lander.gd" id="1_ro4j6"]
+[ext_resource type="Script" path="res://scripts/lander/lander.gd" id="1_ro4j6"]
 [ext_resource type="Script" path="res://scripts/altimeter.gd" id="3_pch7y"]
 [ext_resource type="Texture2D" uid="uid://ba3mm5o7td31l" path="res://images/explosion.png" id="3_yx4xp"]
 [ext_resource type="Texture2D" uid="uid://bdltkpysb5i2w" path="res://images/alotofparticles022/22 TorchDrippingOrangeBrown .png" id="5_k8inu"]
 [ext_resource type="Texture2D" uid="uid://b4sr80kckpmay" path="res://images/alotofparticles022/22 TorchDrippingDkBlue .png" id="6_ora22"]
 [ext_resource type="PackedScene" uid="uid://chh1fj8l7wkfu" path="res://scenes/maneuver.tscn" id="7_rjl8s"]
-[ext_resource type="Script" path="res://scripts/eingine_flame.gd" id="8_kphqf"]
+[ext_resource type="Script" path="res://scripts/lander/eingine_flame.gd" id="8_kphqf"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gcdkp"]
 

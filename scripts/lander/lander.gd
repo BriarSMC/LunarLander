@@ -122,9 +122,9 @@ func _physics_process(delta):
 # Step 3
 	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining)
 # Step 4
-	lander_state = _check_lander_state()
+	lander_state = check_lander_state()
 	if lander_state != Constant.lander_states.INFLIGHT:
-		_game_over()
+		set_game_over_state()
 	
 
 # Built-in Signal Callbacks
@@ -239,7 +239,7 @@ func we_landed(vel: Vector2) -> void:
 # Private Methods
 
 
-# _check_lander_state() -> enum:
+# check_lander_state() -> enum:
 # Check to see if we need to end the game.
 # Did lander:
 #	o Still in flight
@@ -253,7 +253,7 @@ func we_landed(vel: Vector2) -> void:
 #	lander_state: enum
 #==
 # Check in order of Severe to Normal and return the appropriate state
-func _check_lander_state() -> int: 
+func check_lander_state() -> int: 
 	if (position.y < -200.0 or
 		position.x < -terrain.get_terrain_width() / 2.0 or 
 		position.x > terrain.get_terrain_width() / 2.0):
@@ -264,7 +264,7 @@ func _check_lander_state() -> int:
 		
 	
 
-# game_over()
+# set_game_over_state()
 # Do whatever is needed when a game is over
 #
 # Parameters
@@ -278,7 +278,7 @@ func _check_lander_state() -> int:
 # Indicate game is over
 # Stop the engine and thrusters
 # Call HUD depending on what happened
-func _game_over() -> void:
+func set_game_over_state() -> void:
 	if lander_state != Constant.lander_states.LEFTSCREEN and not sleeping:
 			return
 	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining)

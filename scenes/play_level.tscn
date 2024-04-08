@@ -31,4 +31,4 @@ metadata/_edit_group_ = true
 script = ExtResource("3_ciqlb")
 
 [node name="HUD" parent="." node_paths=PackedStringArray("lander") instance=ExtResource("4_k5bum")]
-lander = NodePath("../Lander")
+lander = NodePath("")
