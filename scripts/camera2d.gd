@@ -80,7 +80,12 @@ func zoom_camera_out() -> void:
 	
 # Public Methods
 
-
+func altitude_zoom(alt: float) -> void:
+	if alt < Constant.zoom_altitude and zoom.x <= 1.0:
+		zoom_camera_in()
+	if alt >= Constant.zoom_altitude and zoom.x > 1.0:
+		zoom_camera_out()
+	
 # Private Methods
 
 

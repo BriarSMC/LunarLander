@@ -24,10 +24,10 @@ gravity_scale = 0.167
 directional_thrust = 20.0
 hud = NodePath("../HUD")
 terrain = NodePath("../Terrain")
-camera = NodePath("Camera2D")
+camera = NodePath("Camera")
 metadata/_edit_group_ = true
 
-[node name="Camera2D" type="Camera2D" parent="Lander"]
+[node name="Camera" type="Camera2D" parent="Lander"]
 script = ExtResource("3_ciqlb")
 
 [node name="HUD" parent="." node_paths=PackedStringArray("lander") instance=ExtResource("4_k5bum")]

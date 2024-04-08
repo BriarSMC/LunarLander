@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://8sy5ghc53xc1"]
+[gd_scene load_steps=108 format=3 uid="uid://8sy5ghc53xc1"]
 
 [ext_resource type="Texture2D" uid="uid://cd5t0s4a6fgbp" path="res://images/lander.png" id="1_a1r1k"]
 [ext_resource type="Script" path="res://scripts/lander.gd" id="1_ro4j6"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ba3mm5o7td31l" path="res://images/explosion.png" id="3_yx4xp"]
 [ext_resource type="Texture2D" uid="uid://bdltkpysb5i2w" path="res://images/alotofparticles022/22 TorchDrippingOrangeBrown .png" id="5_k8inu"]
 [ext_resource type="Texture2D" uid="uid://b4sr80kckpmay" path="res://images/alotofparticles022/22 TorchDrippingDkBlue .png" id="6_ora22"]
+[ext_resource type="PackedScene" uid="uid://chh1fj8l7wkfu" path="res://scenes/maneuver.tscn" id="7_rjl8s"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gcdkp"]
 
@@ -742,26 +743,33 @@ target_position = Vector2(0, 10000)
 collision_mask = 8
 script = ExtResource("3_pch7y")
 
-[node name="MainEngine" type="AnimatedSprite2D" parent="."]
+[node name="Engines" type="Node2D" parent="."]
+
+[node name="MainEngine" type="AnimatedSprite2D" parent="Engines"]
 position = Vector2(-1, 63)
 rotation = 3.14159
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_h76mc")
 animation = &"engine_on"
 
-[node name="LeftThruster" type="AnimatedSprite2D" parent="."]
+[node name="LeftThruster" type="AnimatedSprite2D" parent="Engines"]
 position = Vector2(-43, -2.4869e-14)
 rotation = -1.5708
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_xit87")
 animation = &"engine_on"
 
-[node name="RightThruster" type="AnimatedSprite2D" parent="."]
+[node name="RightThruster" type="AnimatedSprite2D" parent="Engines"]
 position = Vector2(43, 0)
 rotation = 1.5708
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_xit87")
 animation = &"engine_on"
+
+[node name="SupportingScripts" type="Node2D" parent="."]
+
+[node name="Maneuver" parent="SupportingScripts" node_paths=PackedStringArray("lander") instance=ExtResource("7_rjl8s")]
+lander = NodePath("../..")
 
 [connection signal="body_entered" from="DetectLanding" to="." method="_on_detect_landing_body_entered"]
 [connection signal="body_entered" from="DetectSideContact" to="." method="_on_detect_side_contact_body_entered"]
