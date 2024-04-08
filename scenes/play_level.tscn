@@ -30,5 +30,4 @@ metadata/_edit_group_ = true
 [node name="Camera" type="Camera2D" parent="Lander"]
 script = ExtResource("3_ciqlb")
 
-[node name="HUD" parent="." node_paths=PackedStringArray("lander") instance=ExtResource("4_k5bum")]
-lander = NodePath("")
+[node name="HUD" parent="." instance=ExtResource("4_k5bum")]
