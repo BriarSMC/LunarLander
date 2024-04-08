@@ -4,6 +4,11 @@ extends Node2D
 
 #region Description
 # This module handles all the user input to control the flight of the lander.
+#
+# This module exists for the sole purpose of moving the code out of the lander
+# node to make it more readable. Screw using signals to communicate with the parent.
+# So we use pointers to the Lander and EngineFlame to facilitate calling the 
+# necessary functions in both of them.
 #endregion
 
 

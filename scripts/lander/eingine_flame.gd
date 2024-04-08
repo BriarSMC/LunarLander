@@ -2,7 +2,12 @@ class_name EngineFlame
 extends Node2D
 
 #region Description
-# <description>
+# Control the flame animation and sounds for the engines.
+#
+# This module exists for the sole purpose of moving the code out of the lander
+# node to make it more readable. Screw using signals to communicate with the parent.
+# So we use pointers to the Lander  to facilitate calling the 
+# necessary functions in it.
 #endregion
 
 

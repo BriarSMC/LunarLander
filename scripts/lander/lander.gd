@@ -50,6 +50,10 @@ signal lander_landed (vel: Vector2)
 # with the Editor Inspector. From the scene containing Lander drag the 
 # node to this exposed variable.
 @export var hud: CanvasLayer
+
+# These are pointers to the lander used by:
+#	Maneuver
+#	EngineFlame
 @export var terrain: StaticBody2D
 @export var camera: Camera
 
