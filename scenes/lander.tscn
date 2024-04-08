@@ -355,11 +355,6 @@ region = Rect2(192, 1152, 192, 192)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h76mc"]
 animations = [{
-"frames": [],
-"loop": false,
-"name": &"engine_off",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_51yeb")
@@ -690,7 +685,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_b4dyo")
 }],
 "loop": false,
-"name": &"thruster_on",
+"name": &"engine_on",
 "speed": 44.0
 }]
 
@@ -752,25 +747,21 @@ position = Vector2(-1, 63)
 rotation = 3.14159
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_h76mc")
-animation = &"engine_off"
+animation = &"engine_on"
 
 [node name="LeftThruster" type="AnimatedSprite2D" parent="."]
 position = Vector2(-43, -2.4869e-14)
 rotation = -1.5708
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_xit87")
-animation = &"thruster_on"
-frame = 31
-frame_progress = 1.0
+animation = &"engine_on"
 
 [node name="RightThruster" type="AnimatedSprite2D" parent="."]
 position = Vector2(43, 0)
 rotation = 1.5708
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_xit87")
-animation = &"thruster_on"
-frame = 31
-frame_progress = 1.0
+animation = &"engine_on"
 
 [connection signal="body_entered" from="DetectLanding" to="." method="_on_detect_landing_body_entered"]
 [connection signal="body_entered" from="DetectSideContact" to="." method="_on_detect_side_contact_body_entered"]

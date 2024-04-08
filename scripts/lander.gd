@@ -68,12 +68,14 @@ var previous_velocity: Vector2
 var game_over := false
 var fuel_remaining: float
 
+
 # onready variables
 
 @onready var lander_starting_position := position
 @onready var lander_starting_rotation := rotation
 @onready var lander_starting_velocity := linear_velocity
 @onready var lander_starting_angular_velocity := angular_velocity 
+@onready var engines = [$MainEngine, $LeftThruster, $RightThruster]
 
 # Virtual Godot methods
 
@@ -339,7 +341,7 @@ func _game_over() -> void:
 
 
 # _engine_flame(engine, on_off = false)
-# Start or stop the main engine/thruster animation based on show
+# Start or stop the main engine/thruster animation based on on_off
 #
 # Parameters
 #	engine: int						0 = Main, 1 = Left thruster, 2 = Right thruster, 3 = All engines
@@ -351,45 +353,28 @@ func _game_over() -> void:
 # If ALL, then all engines are stopped regardless of show
 func _engine_flame(engine: int, on_off: bool = false) -> void:
 	match engine:
+		selected_engine.MAIN, selected_engine.LEFT, selected_engine.RIGHT:
+			if on_off:
+				engines[engine].play("engine_on")
+				engines[engine].visible = true
+			else:
+				engines[engine].stop()
+				engines[engine].visible = false
+			
+	match engine:			
 		selected_engine.MAIN:
-			if on_off:
-				$MainEngine.visible = true
-				$MainEngine.play("engine_on")
-				Audioplayer.engine(true)
-			else:
-				$MainEngine.visible = false
-				$MainEngine.stop()
-				Audioplayer.engine(false)
-	
-		selected_engine.LEFT:
-			if on_off:
-				$LeftThruster.visible = true
-				$LeftThruster.play("thruster_on")
-				Audioplayer.thruster(true)
-			else:
-				$LeftThruster.visible = false
-				$LeftThruster.stop()	
-				Audioplayer.thruster(false)
-				
-		selected_engine.RIGHT:
-			if on_off:
-				$RightThruster.visible = true
-				$RightThruster.play("thruster_on")
-				Audioplayer.thruster(true)
-			else:
-				$RightThruster.visible = false
-				$RightThruster.stop()	
-				Audioplayer.thruster(false)
-				
+			Audioplayer.engine(on_off)
+			
+		selected_engine.LEFT, selected_engine.RIGHT:
+			Audioplayer.thruster(on_off)
+			
+	match engine:			
 		selected_engine.ALL:
-				$MainEngine.visible = false
-				$MainEngine.stop()
-				$LeftThruster.visible = false
-				$LeftThruster.stop()	
-				$RightThruster.visible = false
-				$RightThruster.stop()	
-				Audioplayer.engine(false)
-				Audioplayer.thruster(false)
+			for e in engines:
+				e.visible = false
+				e.stop()
+			Audioplayer.engine(false)
+			Audioplayer.thruster(false)
 				
 				
 # reset_level()
