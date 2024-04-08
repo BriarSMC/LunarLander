@@ -74,6 +74,7 @@ var fuel_remaining: float
 @onready var lander_starting_angular_velocity := angular_velocity 
 @onready var engines = [$Engines/MainEngine, $Engines/LeftThruster, $Engines/RightThruster]
 @onready var maneuver = $SupportingScripts/Maneuver
+@onready var engine_flame = $SupportingScripts/EngineFlame
 
 #endregion
 
@@ -202,7 +203,7 @@ func _on_detect_side_contact_body_entered(_body):
 func we_crashed(vel: Vector2) -> void:
 # Step 1
 	lander_state = Constant.lander_states.CRASHED
-	engine_flame(Constant.selected_engine.ALL, false)
+	engine_flame.throttle(Constant.selected_engine.ALL, false)
 	camera.zoom_in.emit()
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
@@ -226,7 +227,7 @@ func we_crashed(vel: Vector2) -> void:
 func we_landed(vel: Vector2) -> void:
 # Step 1
 	lander_state = Constant.lander_states.LANDED
-	engine_flame(Constant.selected_engine.ALL, false)
+	engine_flame.throttle(Constant.selected_engine.ALL, false)
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
@@ -235,45 +236,6 @@ func we_landed(vel: Vector2) -> void:
 # Public Methods
 
 
-# engine_flame(engine, on_off = false)
-# Start or stop the main engine/thruster animation based on on_off
-#
-# Parameters
-#	engine: int						0 = Main, 1 = Left thruster, 2 = Right thruster, 3 = All engines
-#	show: bool						True: Show engine, False: Don't show engine
-# Return
-#	None
-#==
-# Start/Stop the appropriate engine
-# If ALL, then all engines are stopped regardless of show
-func engine_flame(engine: int, on_off: bool = false) -> void:
-	match engine:
-		Constant.selected_engine.MAIN, \
-		Constant.selected_engine.LEFT, \
-		Constant.selected_engine.RIGHT:
-			if on_off:
-				engines[engine].play("engine_on")
-				engines[engine].visible = true
-			else:
-				engines[engine].stop()
-				engines[engine].visible = false
-			
-	match engine:			
-		Constant.selected_engine.MAIN:
-			Audioplayer.engine(on_off)
-			
-		Constant.selected_engine.LEFT, Constant.selected_engine.RIGHT:
-			Audioplayer.thruster(on_off)
-			
-	match engine:			
-		Constant.selected_engine.ALL:
-			for e in engines:
-				e.visible = false
-				e.stop()
-			Audioplayer.engine(false)
-			Audioplayer.thruster(false)
-				
-				
 # Private Methods
 
 
@@ -323,7 +285,7 @@ func _game_over() -> void:
 	sleeping = true # in case if was LEFTSCREEN
 	$LanderImage.visible = false
 	game_over = true
-	engine_flame(Constant.selected_engine.ALL, false)
+	engine_flame.throttle(Constant.selected_engine.ALL, false)
 	match lander_state:
 		Constant.lander_states.LEFTSCREEN:
 			hud.hud_gameover_changed.emit("Game Over\nYou Flew Into Space", false)
@@ -358,7 +320,7 @@ func reset_level() -> void:
 	rotation = lander_starting_rotation 
 	linear_velocity = lander_starting_velocity
 	angular_velocity = lander_starting_angular_velocity	
-	engine_flame(Constant.selected_engine.ALL, false)
+	engine_flame.throttle(Constant.selected_engine.ALL, false)
 	camera.zoom_out.emit()
 	$Altimeter.reset_altimeter()
 	terrain.new_terrain_requested.emit()

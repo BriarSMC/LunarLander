@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://8sy5ghc53xc1"]
+[gd_scene load_steps=109 format=3 uid="uid://8sy5ghc53xc1"]
 
 [ext_resource type="Texture2D" uid="uid://cd5t0s4a6fgbp" path="res://images/lander.png" id="1_a1r1k"]
 [ext_resource type="Script" path="res://scripts/lander.gd" id="1_ro4j6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bdltkpysb5i2w" path="res://images/alotofparticles022/22 TorchDrippingOrangeBrown .png" id="5_k8inu"]
 [ext_resource type="Texture2D" uid="uid://b4sr80kckpmay" path="res://images/alotofparticles022/22 TorchDrippingDkBlue .png" id="6_ora22"]
 [ext_resource type="PackedScene" uid="uid://chh1fj8l7wkfu" path="res://scenes/maneuver.tscn" id="7_rjl8s"]
+[ext_resource type="Script" path="res://scripts/eingine_flame.gd" id="8_kphqf"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gcdkp"]
 
@@ -768,7 +769,12 @@ animation = &"engine_on"
 
 [node name="SupportingScripts" type="Node2D" parent="."]
 
-[node name="Maneuver" parent="SupportingScripts" node_paths=PackedStringArray("lander") instance=ExtResource("7_rjl8s")]
+[node name="Maneuver" parent="SupportingScripts" node_paths=PackedStringArray("lander", "engine_flame") instance=ExtResource("7_rjl8s")]
+lander = NodePath("../..")
+engine_flame = NodePath("../EngineFlame")
+
+[node name="EngineFlame" type="Node2D" parent="SupportingScripts" node_paths=PackedStringArray("lander")]
+script = ExtResource("8_kphqf")
 lander = NodePath("../..")
 
 [connection signal="body_entered" from="DetectLanding" to="." method="_on_detect_landing_body_entered"]

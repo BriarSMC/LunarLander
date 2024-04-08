@@ -18,6 +18,7 @@ extends Node2D
 # exports (The following properties must be set in the Inspector by the designer)
 
 @export var lander: Lander
+@export var engine_flame: EngineFlame
 
 # public variables
 
@@ -60,9 +61,9 @@ func maneuver(delta) -> void:
 	if Input.is_action_pressed("engine_control"):
 		lander.apply_central_impulse(lander.engine_thrust_vector)
 		lander.fuel_remaining -= lander.engine_burn_rate * delta
-		lander.engine_flame(Constant.selected_engine.MAIN, true)
+		engine_flame.throttle(Constant.selected_engine.MAIN, true)
 	else:
-		lander.engine_flame(Constant.selected_engine.MAIN, false)
+		engine_flame.throttle(Constant.selected_engine.MAIN, false)
 # Step 2
 	var thrusters := Input.get_axis("go_left", "go_right")
 	var selected_thruster = 0
@@ -73,10 +74,10 @@ func maneuver(delta) -> void:
 	if  thrusters != 0.0:
 		lander.apply_central_impulse(Vector2(thrusters * lander.directional_thrust, 0.0))
 		lander.fuel_remaining -= lander.directional_burn_rate * delta
-		lander.engine_flame(selected_thruster, true)
+		engine_flame.throttle(selected_thruster, true)
 	else:
-		lander.engine_flame(Constant.selected_engine.LEFT, false)
-		lander.engine_flame(Constant.selected_engine.RIGHT, false)
+		engine_flame.throttle(Constant.selected_engine.LEFT, false)
+		engine_flame.throttle(Constant.selected_engine.RIGHT, false)
 
 
 # Private Methods
