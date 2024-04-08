@@ -77,6 +77,9 @@ var fuel_remaining: float
 @onready var lander_starting_angular_velocity := angular_velocity 
 @onready var engines = [$MainEngine, $LeftThruster, $RightThruster]
 
+#endregion
+
+
 # Virtual Godot methods
 
 # _ready()
