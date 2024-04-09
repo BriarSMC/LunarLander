@@ -66,6 +66,14 @@ layout_mode = 2
 layout_mode = 2
 text = "Quit"
 
+[node name="HSeparator2" type="HSeparator" parent="UI/HBoxContainer/Menu"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="Help" type="Button" parent="UI/HBoxContainer/Menu"]
+layout_mode = 2
+text = "Help"
+
 [node name="VSeparator" type="VSeparator" parent="UI/HBoxContainer"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
@@ -77,6 +85,7 @@ stretch_mode = 3
 
 [connection signal="pressed" from="UI/HBoxContainer/Menu/StartGame" to="UI" method="_on_start_game_pressed"]
 [connection signal="pressed" from="UI/HBoxContainer/Menu/QuitGame" to="UI" method="_on_quit_game_pressed"]
+[connection signal="pressed" from="UI/HBoxContainer/Menu/Help" to="UI" method="_on_help_pressed"]
 [connection signal="focus_entered" from="UI/HBoxContainer/SelectLander" to="UI" method="_on_select_lander_focus_entered"]
 [connection signal="mouse_exited" from="UI/HBoxContainer/SelectLander" to="UI" method="_on_select_lander_mouse_exited"]
 [connection signal="pressed" from="UI/HBoxContainer/SelectLander" to="UI" method="_on_select_lander_pressed"]

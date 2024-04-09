@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://2sfcu5bjjx1n"]
+
+[ext_resource type="Script" path="res://scripts/help_screen.gd" id="1_wdsc0"]
+[ext_resource type="Texture2D" uid="uid://d4jwh70u1lofe" path="res://images/HelpScreens/HelpImage.png" id="1_x5qjw"]
+[ext_resource type="Theme" uid="uid://dduospivxw12q" path="res://themes/splash_screen_controls.tres" id="2_8f4fi"]
+
+[node name="HelpScreen" type="CanvasLayer"]
+script = ExtResource("1_wdsc0")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_x5qjw")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="GoBack" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.95
+anchor_right = 0.05
+anchor_bottom = 0.95
+offset_top = -109.0
+offset_right = 240.0
+grow_vertical = 0
+theme = ExtResource("2_8f4fi")
+text = "Go Back"
+
+[connection signal="pressed" from="GoBack" to="." method="_on_go_back_pressed"]

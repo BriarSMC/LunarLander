@@ -16,6 +16,8 @@ extends CanvasLayer
 
 # constants
 
+const help_screen = preload("res://scenes/help_screen.tscn")
+
 const lander0 = preload("res://images/landers/lander_tn.png")
 const lander1 = preload("res://images/landers/cohete_off_tn.png")
 const landerfoc0 = preload("res://images/landers/lander_tn_focused.png")
@@ -81,6 +83,11 @@ func _on_start_game_pressed():
 
 func _on_quit_game_pressed():
 	exit_game()
+
+
+
+func _on_help_pressed():
+	get_tree().change_scene_to_packed(help_screen)
 	
 	
 # Force focus images
@@ -148,8 +155,4 @@ func exit_game() -> void:
 	
 	
 # Subclasses
-
-
-
-
 
