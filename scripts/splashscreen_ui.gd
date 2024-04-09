@@ -18,8 +18,11 @@ extends CanvasLayer
 
 const lander0 = preload("res://images/landers/lander_tn.png")
 const lander1 = preload("res://images/landers/cohete_off_tn.png")
+const landerfoc0 = preload("res://images/landers/lander_tn_focused.png")
+const landerfoc1 = preload("res://images/landers/cohete_off_tn_focused.png")
 
 const lander = [lander0, lander1]
+const lander_focused = [landerfoc0, landerfoc1]
 
 # exports (The following properties must be set in the Inspector by the designer)
 
@@ -80,7 +83,18 @@ func _on_quit_game_pressed():
 	exit_game()
 	
 	
-# Select a new lander
+# Force focus images
+func _on_select_lander_focus_entered():
+	$HBoxContainer/SelectLander.texture_normal = lander[current_lander]
+	$HBoxContainer/SelectLander.texture_focused = lander_focused[current_lander]
+
+
+
+func _on_select_lander_mouse_exited():
+	$HBoxContainer/SelectLander.texture_normal = lander[current_lander]
+	$HBoxContainer/SelectLander.texture_focused = lander_focused[current_lander]
+
+
 #==
 # Ignore if there is only 1 lander to choose from
 # If current lander is the last lander, then point to the first lander
@@ -98,7 +112,7 @@ func _on_select_lander_pressed():
 		
 	Config.lander_type = current_lander
 	$HBoxContainer/SelectLander.texture_normal = lander[current_lander]
-	
+	$HBoxContainer/SelectLander.texture_focused = lander_focused[current_lander]
 
 # Custom Signal Callbacks
 
@@ -134,4 +148,8 @@ func exit_game() -> void:
 	
 	
 # Subclasses
+
+
+
+
 

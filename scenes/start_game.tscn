@@ -77,4 +77,6 @@ stretch_mode = 3
 
 [connection signal="pressed" from="UI/HBoxContainer/Menu/StartGame" to="UI" method="_on_start_game_pressed"]
 [connection signal="pressed" from="UI/HBoxContainer/Menu/QuitGame" to="UI" method="_on_quit_game_pressed"]
+[connection signal="focus_entered" from="UI/HBoxContainer/SelectLander" to="UI" method="_on_select_lander_focus_entered"]
+[connection signal="mouse_exited" from="UI/HBoxContainer/SelectLander" to="UI" method="_on_select_lander_mouse_exited"]
 [connection signal="pressed" from="UI/HBoxContainer/SelectLander" to="UI" method="_on_select_lander_pressed"]
