@@ -83,6 +83,18 @@ layout_mode = 2
 texture_normal = ExtResource("5_jncwv")
 stretch_mode = 3
 
+[node name="VersionNumber" type="Label" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+vertical_alignment = 1
+
 [connection signal="pressed" from="UI/HBoxContainer/Menu/StartGame" to="UI" method="_on_start_game_pressed"]
 [connection signal="pressed" from="UI/HBoxContainer/Menu/QuitGame" to="UI" method="_on_quit_game_pressed"]
 [connection signal="pressed" from="UI/HBoxContainer/Menu/Help" to="UI" method="_on_help_pressed"]

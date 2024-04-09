@@ -37,6 +37,7 @@ var current_lander = 0
 # onready variables
 
 @onready var max_landers = Constant.lander_spec.size()
+@onready var version_number = ProjectSettings.get_setting("application/config/version")
 
 #endregion
 
@@ -54,7 +55,7 @@ var current_lander = 0
 # Set start button to grab focus
 func _ready() -> void:
 	$HBoxContainer/Menu/StartGame.grab_focus()
-
+	$VersionNumber.text = version_number + "\t\n\n"
 # _input(event)
 # Process input events
 #
