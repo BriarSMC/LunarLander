@@ -1,6 +1,7 @@
-[gd_scene load_steps=108 format=3 uid="uid://8sy5ghc53xc1"]
+[gd_scene load_steps=109 format=3 uid="uid://8sy5ghc53xc1"]
 
 [ext_resource type="Script" path="res://scripts/lander/lander.gd" id="1_ro4j6"]
+[ext_resource type="Texture2D" uid="uid://durvhs2s80ko3" path="res://images/landers/cohete_off.png" id="2_asi0b"]
 [ext_resource type="Script" path="res://scripts/altimeter.gd" id="3_pch7y"]
 [ext_resource type="Texture2D" uid="uid://ba3mm5o7td31l" path="res://images/explosion.png" id="3_yx4xp"]
 [ext_resource type="Texture2D" uid="uid://bdltkpysb5i2w" path="res://images/alotofparticles022/22 TorchDrippingOrangeBrown .png" id="5_k8inu"]
@@ -11,16 +12,16 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gcdkp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dlqel"]
-size = Vector2(0, 0)
+size = Vector2(34, 46)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yw2oe"]
-size = Vector2(0, 0)
+size = Vector2(8, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8mtob"]
-size = Vector2(44, 2)
+size = Vector2(28, 1.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bk64x"]
-size = Vector2(50, 25)
+size = Vector2(34, 46)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l3ulm"]
 atlas = ExtResource("3_yx4xp")
@@ -698,24 +699,24 @@ script = ExtResource("1_ro4j6")
 directional_thrust = 1.0
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -1.5)
 shape = SubResource("RectangleShape2D_dlqel")
 
 [node name="LeftStrutCollider" type="CollisionShape2D" parent="."]
-position = Vector2(-15.0013, 17.0031)
-skew = 0.39968
+position = Vector2(-12, 20)
 shape = SubResource("RectangleShape2D_yw2oe")
 
 [node name="RightStrutCollider" type="CollisionShape2D" parent="."]
-position = Vector2(15, 17)
-skew = -0.39968
+position = Vector2(6, 6.8)
 shape = SubResource("RectangleShape2D_yw2oe")
 
 [node name="DetectLanding" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 8
 
 [node name="Struts" type="CollisionShape2D" parent="DetectLanding"]
-position = Vector2(0, 23)
+position = Vector2(0, 26)
 shape = SubResource("RectangleShape2D_8mtob")
 
 [node name="DetectSideContact" type="Area2D" parent="."]
@@ -723,11 +724,12 @@ collision_layer = 4
 collision_mask = 8
 
 [node name="Sides" type="CollisionShape2D" parent="DetectSideContact"]
-position = Vector2(0, -2.5)
+position = Vector2(0, -1.5)
 shape = SubResource("RectangleShape2D_bk64x")
 
 [node name="LanderImage" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_asi0b")
 
 [node name="Explosion" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6s2gm")
@@ -745,23 +747,23 @@ script = ExtResource("3_pch7y")
 [node name="Engines" type="Node2D" parent="."]
 
 [node name="MainEngine" type="AnimatedSprite2D" parent="Engines"]
-position = Vector2(-1, 63)
+position = Vector2(-5.96069e-08, 47)
 rotation = 3.14159
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_h76mc")
 animation = &"engine_on"
 
 [node name="LeftThruster" type="AnimatedSprite2D" parent="Engines"]
-position = Vector2(-43, -2.4869e-14)
+position = Vector2(-23, -4)
 rotation = -1.5708
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_xit87")
 animation = &"engine_on"
 
 [node name="RightThruster" type="AnimatedSprite2D" parent="Engines"]
-position = Vector2(43, 0)
+position = Vector2(17, -4)
 rotation = 1.5708
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_xit87")
 animation = &"engine_on"
 
