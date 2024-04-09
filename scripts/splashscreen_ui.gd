@@ -16,13 +16,22 @@ extends CanvasLayer
 
 # constants
 
+const lander0 = preload("res://images/landers/lander_tn.png")
+const lander1 = preload("res://images/landers/cohete_off_tn.png")
+
+const lander = [lander0, lander1]
+
 # exports (The following properties must be set in the Inspector by the designer)
 
 # public variables
 
 # private variables
 
+var current_lander = 0
+
 # onready variables
+
+@onready var max_landers = Constant.lander_spec.size()
 
 #endregion
 
@@ -39,7 +48,7 @@ extends CanvasLayer
 #==
 # Set start button to grab focus
 func _ready() -> void:
-	$HBoxContainer/StartGame.grab_focus()
+	$HBoxContainer/Menu/StartGame.grab_focus()
 
 # _input(event)
 # Process input events
@@ -71,7 +80,27 @@ func _on_quit_game_pressed():
 	exit_game()
 	
 	
-## Custom Signal Callbacks
+# Select a new lander
+#==
+# Ignore if there is only 1 lander to choose from
+# If current lander is the last lander, then point to the first lander
+# Otherwise, point to the next lander
+# Set the new lander index in the Config
+# Set the new image in the button
+func _on_select_lander_pressed():
+	if max_landers <= 1:
+		return
+		
+	if current_lander == max_landers - 1:
+		current_lander = 0
+	else:
+		current_lander += 1
+		
+	Config.lander_type = current_lander
+	$HBoxContainer/SelectLander.texture_normal = lander[current_lander]
+	
+
+# Custom Signal Callbacks
 
 
 # Public Methods
@@ -105,3 +134,4 @@ func exit_game() -> void:
 	
 	
 # Subclasses
+
