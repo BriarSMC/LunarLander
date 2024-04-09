@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd5t0s4a6fgbp"
-path="res://.godot/imported/lander.png-4299c174945cfed96c8aef4ff28dacfe.ctex"
+uid="uid://ddh8t43u4sdh7"
+path="res://.godot/imported/bigfooinscotland.jpg-85410acd7889cdfb93c87112103b1258.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/lander.png"
-dest_files=["res://.godot/imported/lander.png-4299c174945cfed96c8aef4ff28dacfe.ctex"]
+source_file="res://images/bigfooinscotland.jpg"
+dest_files=["res://.godot/imported/bigfooinscotland.jpg-85410acd7889cdfb93c87112103b1258.ctex"]
 
 [params]
 

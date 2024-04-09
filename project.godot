@@ -31,13 +31,14 @@ config/version="1.0.0"
 run/main_scene="res://scenes/start_game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/show_image=false
-config/icon="res://images/lander.png"
+config/icon="res://images/landers/lander.png"
 
 [autoload]
 
 Preloads="*res://autoload/preloads.gd"
 Audioplayer="*res://autoload/audioplayer.tscn"
 Constant="*res://autoload/constant.gd"
+Config="*res://autoload/config.gd"
 
 [display]
 
