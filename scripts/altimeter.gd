@@ -13,6 +13,7 @@ extends RayCast2D
 # signals
 
 signal altimeter_stopped
+signal graphic_altimeter_requested (on_off: bool)
 
 # enums
 
@@ -51,6 +52,7 @@ var _collision_point := Vector2.ZERO
 func _ready():
 	_hud = get_parent().hud
 	altimeter_stopped.connect(_make_inactive)
+	graphic_altimeter_requested.connect(graphic_altimeter)
 
 
 # _process(delta)
@@ -71,13 +73,14 @@ func _process(_delta):
 	var origin = get_parent().global_position
 	_collision_point = get_collision_point()
 	distance = origin.distance_to(_collision_point)
+	queue_redraw()
 # Step 3
 	_hud.hud_altitude_changed.emit(float(distance))
 
 
 func _draw():
-	draw_circle(_collision_point, 0.1, Color.RED)
-	draw_circle(get_parent().position, .1, Color.GREEN)
+	if visible and _active:
+		draw_line(position, to_local(_collision_point), Color.RED, 2.0)
 	
 # Built-in Signal Callbacks
 
@@ -87,11 +90,21 @@ func _draw():
 func _make_inactive() -> void:
 	_hud.hud_altitude_changed.emit(0.0)
 	_active = false
+	
+
+func graphic_altimeter(on_off: bool) -> void:
+	print("Graphic Altimeter: ", on_off)
+	if on_off:
+		visible = true
+	else:
+		visible = false
+		queue_redraw()
 
 # Public Methods
 
 func reset_altimeter() -> void:
 	distance = reset_altitude_value
 	_active = true
+	visible = false
 
 # Private Methods

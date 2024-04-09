@@ -126,6 +126,10 @@ func _physics_process(delta):
 	if not engines_shutdown:
 		maneuver.maneuver(delta)
 	camera.altitude_zoom($Altimeter.distance)
+	if $Altimeter.distance <= Constant.zoom_altitude:
+		$Altimeter.graphic_altimeter_requested.emit(true)
+	else:
+		$Altimeter.graphic_altimeter_requested.emit(false)
 # Step 3
 	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining)
 # Step 4
@@ -157,6 +161,7 @@ func _on_detect_landing_body_entered(_body):
 # Step 2
 	hud.hud_freeze_requested.emit()
 	engines_shutdown = true
+	$Altimeter.graphic_altimeter_requested.emit(false)
 # Step 3: See if we landed within maximum limits
 #	If so, emit we have landed.
 #	If not, emit we have crashed.
@@ -187,6 +192,7 @@ func _on_detect_side_contact_body_entered(_body):
 	if lander_state == Constant.lander_states.CRASHED: return
 	hud.hud_freeze_requested.emit()
 	engines_shutdown = true
+	$Altimeter.graphic_altimeter_requested.emit(false)
 # Step 2
 	emit_signal("lander_crashed", previous_velocity)
 
@@ -212,6 +218,7 @@ func we_crashed(vel: Vector2) -> void:
 	lander_state = Constant.lander_states.CRASHED
 	engine_flame.throttle(Constant.selected_engine.ALL, false)
 	camera.zoom_in.emit()
+	$Altimeter.graphic_altimeter_requested.emit(false)
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
@@ -293,6 +300,7 @@ func set_game_over_state() -> void:
 	$LanderImage.visible = false
 	game_over = true
 	engine_flame.throttle(Constant.selected_engine.ALL, false)
+
 	match lander_state:
 		Constant.lander_states.LEFTSCREEN:
 			hud.hud_gameover_changed.emit("Game Over\nYou Flew Into Space", false)
@@ -329,6 +337,7 @@ func reset_level() -> void:
 	angular_velocity = lander_starting_angular_velocity	
 	engine_flame.throttle(Constant.selected_engine.ALL, false)
 	camera.zoom_out.emit()
+	$Altimeter.graphic_altimeter_requested.emit(false)
 	$Altimeter.reset_altimeter()
 	terrain.new_terrain_requested.emit()
 	
