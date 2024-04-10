@@ -93,7 +93,6 @@ func _make_inactive() -> void:
 	
 
 func graphic_altimeter(on_off: bool) -> void:
-	print("Graphic Altimeter: ", on_off)
 	if on_off:
 		visible = true
 	else:

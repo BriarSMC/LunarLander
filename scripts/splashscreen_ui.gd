@@ -93,14 +93,14 @@ func _on_help_pressed():
 	
 # Force focus images
 func _on_select_lander_focus_entered():
-	$HBoxContainer/SelectLander.texture_normal = lander[current_lander]
-	$HBoxContainer/SelectLander.texture_focused = lander_focused[current_lander]
+	$HBoxContainer/Landers/SelectLander.texture_normal = lander[current_lander]
+	$HBoxContainer/Landers/SelectLander.texture_focused = lander_focused[current_lander]
 
 
 
 func _on_select_lander_mouse_exited():
-	$HBoxContainer/SelectLander.texture_normal = lander[current_lander]
-	$HBoxContainer/SelectLander.texture_focused = lander_focused[current_lander]
+	$HBoxContainer/Landers/SelectLander.texture_normal = lander[current_lander]
+	$HBoxContainer/Landers/SelectLander.texture_focused = lander_focused[current_lander]
 
 
 #==
@@ -119,8 +119,8 @@ func _on_select_lander_pressed():
 		current_lander += 1
 		
 	Config.lander_type = current_lander
-	$HBoxContainer/SelectLander.texture_normal = lander[current_lander]
-	$HBoxContainer/SelectLander.texture_focused = lander_focused[current_lander]
+	$HBoxContainer/Landers/SelectLander.texture_normal = lander[current_lander]
+	$HBoxContainer/Landers/SelectLander.texture_focused = lander_focused[current_lander]
 
 # Custom Signal Callbacks
 

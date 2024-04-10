@@ -271,7 +271,6 @@ func check_lander_state() -> int:
 	if (position.y < -200.0 or
 		position.x < -terrain.get_terrain_width() / 2.0 or 
 		position.x > terrain.get_terrain_width() / 2.0):
-		print("Left Screen at: ", position)
 		return Constant.lander_states.LEFTSCREEN
 	else:
 		return lander_state

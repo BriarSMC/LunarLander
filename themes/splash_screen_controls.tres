@@ -15,3 +15,6 @@ Button/font_sizes/font_size = 80
 Button/fonts/font = ExtResource("1_ifthc")
 Button/styles/hover = SubResource("StyleBoxFlat_y51iu")
 Button/styles/normal = ExtResource("2_jfhgx")
+Label/colors/font_color = Color(0.827451, 0.745098, 0.0862745, 1)
+Label/font_sizes/font_size = 40
+Label/fonts/font = ExtResource("1_ifthc")
