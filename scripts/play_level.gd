@@ -100,8 +100,8 @@ func _on_resume_pressed():
 #==
 # What the code is doing (steps)
 func display_new_start_values() -> void:
-	$StartGameUI/StartGamePanel/StartGameContainer/VVelocityMax.text = "    Vertical: " + str(Config.max_vertical_velocity)
-	$StartGameUI/StartGamePanel/StartGameContainer/HVelocityMax.text = "    Horizontal: " + str(Config.max_horizontal_velocity)
+	$StartGameUI/StartGamePanel/StartGameContainer/VVelocityMax.text = "    Vertical: " + str(Config.difficulty[Config.level]["MAXV"])
+	$StartGameUI/StartGamePanel/StartGameContainer/HVelocityMax.text = "    Horizontal: " + str(Config.difficulty[Config.level]["MAXH"])
 
 
 

@@ -29,8 +29,8 @@ extends RigidBody2D
 # signals
 
 signal reset_level_requested
-signal lander_crashed (vel: Vector2)
-signal lander_landed (vel: Vector2)
+signal lander_crashed 
+signal lander_landed 
 
 # enums
 
@@ -215,7 +215,7 @@ func _on_detect_side_contact_body_entered(_body):
 #	Stop the engines
 # Step 2: Tell the Altimeter to stop updating HUD
 # Step 3: Update HUD 
-func we_crashed(vel: Vector2) -> void:
+func we_crashed() -> void:
 # Step 1
 	lander_state = Constant.lander_states.CRASHED
 	engine_flame.throttle(Constant.selected_engine.ALL, false)
@@ -240,7 +240,7 @@ func we_crashed(vel: Vector2) -> void:
 #	Stop the engines
 # Step 2: Tell the Altimeter to stop updating HUD
 # Step 3: Update HUD with velocity and fuel values
-func we_landed(vel: Vector2) -> void:
+func we_landed() -> void:
 # Step 1
 	lander_state = Constant.lander_states.LANDED
 	engine_flame.throttle(Constant.selected_engine.ALL, false)
@@ -325,9 +325,9 @@ func set_game_over_state() -> void:
 # Set variables
 # Set objects
 func reset_level() -> void:
-	max_vertical_velocity = Config.max_vertical_velocity
-	max_horizontal_velocity = Config.max_horizontal_velocity
-	fuel_on_board = Config.fuel_on_board
+	max_vertical_velocity = Config.difficulty[Config.level]["MAXV"]
+	max_horizontal_velocity = Config.difficulty[Config.level]["MAXH"]
+	fuel_on_board = Config.difficulty[Config.level]["FUEL"]
 	lander_state = Constant.lander_states.INFLIGHT
 	engines_shutdown = false
 	game_over = false

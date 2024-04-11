@@ -49,6 +49,7 @@ offset_right = 138.0
 offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_bnn0c")
 
 [node name="Menu" type="VBoxContainer" parent="UI/HBoxContainer"]
 layout_mode = 2
@@ -91,6 +92,12 @@ layout_mode = 2
 theme = ExtResource("3_bnn0c")
 text = "Choose a lander"
 
+[node name="Level" type="ItemList" parent="UI/HBoxContainer/Landers"]
+layout_mode = 2
+auto_height = true
+item_count = 1
+item_0/text = "Placeholder"
+
 [node name="VersionNumber" type="Label" parent="UI"]
 anchors_preset = 3
 anchor_left = 1.0
@@ -109,3 +116,4 @@ vertical_alignment = 1
 [connection signal="focus_entered" from="UI/HBoxContainer/Landers/SelectLander" to="UI" method="_on_select_lander_focus_entered"]
 [connection signal="mouse_exited" from="UI/HBoxContainer/Landers/SelectLander" to="UI" method="_on_select_lander_mouse_exited"]
 [connection signal="pressed" from="UI/HBoxContainer/Landers/SelectLander" to="UI" method="_on_select_lander_pressed"]
+[connection signal="item_selected" from="UI/HBoxContainer/Landers/Level" to="UI" method="_on_level_item_selected"]

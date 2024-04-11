@@ -56,6 +56,8 @@ var current_lander = 0
 func _ready() -> void:
 	$HBoxContainer/Menu/StartGame.grab_focus()
 	$VersionNumber.text = version_number + "\t\n\n"
+	load_level_list()
+	
 # _input(event)
 # Process input events
 #
@@ -122,6 +124,12 @@ func _on_select_lander_pressed():
 	$HBoxContainer/Landers/SelectLander.texture_normal = lander[current_lander]
 	$HBoxContainer/Landers/SelectLander.texture_focused = lander_focused[current_lander]
 
+
+
+# Set the new level
+func _on_level_item_selected(index):
+	Config.level = $HBoxContainer/Landers/Level.get_item_text(index)
+
 # Custom Signal Callbacks
 
 
@@ -155,5 +163,21 @@ func exit_game() -> void:
 	get_tree().quit()
 	
 	
+# load_level_list()
+# Load the item list from Config info
+#
+# Parameters
+#	None
+# Return
+#	None
+#==
+# What the code is doing (steps)
+func load_level_list() -> void:
+	$HBoxContainer/Landers/Level.clear()
+	for i in Config.difficulty.keys():
+		$HBoxContainer/Landers/Level.add_item(i)
+	$HBoxContainer/Landers/Level.select(0)
+	Config.level = "EASY"
+
 # Subclasses
 

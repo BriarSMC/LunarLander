@@ -61,7 +61,6 @@ extends Node2D
 # Step 2: Check for thrusters on. If so,
 #	o Apply force laterally
 #	o Deplete fuel accordingly
-# Step 3: Check for pressing pause button
 func maneuver(delta) -> void:
 # Step 1
 	if Input.is_action_pressed("engine_control"):
@@ -84,9 +83,6 @@ func maneuver(delta) -> void:
 	else:
 		engine_flame.throttle(Constant.selected_engine.LEFT, false)
 		engine_flame.throttle(Constant.selected_engine.RIGHT, false)
-# Step 3
-	if Input.is_action_just_pressed("pause_game"):
-		lander.emit_signal("pause_requested")
 
 # Private Methods
 

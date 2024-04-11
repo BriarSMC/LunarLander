@@ -2,7 +2,22 @@ extends Node
 
 var lander_type := 0
 
-var dificulty_level := 1
-@export var max_vertical_velocity := 300.0
-@export var max_horizontal_velocity := 100.0
-@export var fuel_on_board := 500.0
+
+@export var difficulty = {
+	"EASY" = {
+		"MAXV" = 400.0,
+		"MAXH" = 100.0,
+		"FUEL" = 1000.0,
+	},
+	"MEDIUM" = {
+		"MAXV" = 300.0,
+		"MAXH" = 75.0,
+		"FUEL" = 500.0,
+	},
+	"HARD" = {
+		"MAXV" = 200.0,
+		"MAXH" = 50.0,
+		"FUEL" = 300.0,
+	},
+}
+var level := "EASY"
