@@ -66,7 +66,7 @@ func _ready() -> void:
 #==
 # What the code is doing (steps)
 func _input(event) -> void:
-	if event.is_action_pressed("start_game"):
+	if event.is_action_pressed("start_pause_game"):
 		start_new_game()
 		
 	if event.is_action_pressed("quit_game"):

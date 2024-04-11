@@ -38,9 +38,7 @@ signal lander_landed (vel: Vector2)
 
 # exports (The following properties must be set in the Inspector by the designer)
 
-@export var max_vertical_velocity := 400.0
-@export var max_horizontal_velocity := 100.0
-@export var starting_fuel_on_board := 1000.0
+
 @export var engine_burn_rate := 20.0
 @export var directional_burn_rate := 5.0
 @export var directional_thrust := 20.0
@@ -50,6 +48,7 @@ signal lander_landed (vel: Vector2)
 # with the Editor Inspector. From the scene containing Lander drag the 
 # node to this exposed variable.
 @export var hud: CanvasLayer
+@export var play_level: Node2D
 
 # These are pointers to the lander used by:
 #	Maneuver
@@ -69,6 +68,8 @@ var previous_velocity: Vector2
 var game_over := false
 var fuel_remaining: float
 
+var max_vertical_velocity: float
+var max_horizontal_velocity: float
 
 # onready variables
 
@@ -100,6 +101,7 @@ func _ready():
 	reset_level_requested.connect(reset_level)
 	lander_crashed.connect(we_crashed)
 	lander_landed.connect(we_landed)
+	
 	reset_level()
 	load_specs()
 
@@ -112,7 +114,7 @@ func _ready():
 # Return
 #	None
 #==
-# Step 0: Ignore if game is over
+# Step 0: Ignore if paused or game is over
 # Step 1: Preserve the previous velocity for HUD purposes
 # Step 2: Maneuver the lander and zoom camera if needs be
 # Step 3: Update the HUD
@@ -323,7 +325,9 @@ func set_game_over_state() -> void:
 # Set variables
 # Set objects
 func reset_level() -> void:
-	fuel_on_board = starting_fuel_on_board
+	max_vertical_velocity = Config.max_vertical_velocity
+	max_horizontal_velocity = Config.max_horizontal_velocity
+	fuel_on_board = Config.fuel_on_board
 	lander_state = Constant.lander_states.INFLIGHT
 	engines_shutdown = false
 	game_over = false
@@ -405,5 +409,4 @@ func load_specs() -> void:
 	$Engines/RightThruster.skew = spec["right_thruster"]["skew"]
 	
 	
-	# Subclasses
 
