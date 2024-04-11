@@ -82,21 +82,29 @@ layout_mode = 2
 [node name="Landers" type="VBoxContainer" parent="UI/HBoxContainer"]
 layout_mode = 2
 
+[node name="Label" type="Label" parent="UI/HBoxContainer/Landers"]
+layout_mode = 2
+theme = ExtResource("3_bnn0c")
+text = "Choose a lander"
+
 [node name="SelectLander" type="TextureButton" parent="UI/HBoxContainer/Landers"]
 layout_mode = 2
 texture_normal = ExtResource("5_jncwv")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="UI/HBoxContainer/Landers"]
+[node name="Label2" type="Label" parent="UI/HBoxContainer/Landers"]
 layout_mode = 2
 theme = ExtResource("3_bnn0c")
-text = "Choose a lander"
+text = "Choose Difficulty"
 
 [node name="Level" type="ItemList" parent="UI/HBoxContainer/Landers"]
 layout_mode = 2
 auto_height = true
 item_count = 1
 item_0/text = "Placeholder"
+
+[node name="LevelDescription" type="Label" parent="UI/HBoxContainer/Landers"]
+layout_mode = 2
 
 [node name="VersionNumber" type="Label" parent="UI"]
 anchors_preset = 3

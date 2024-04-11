@@ -27,7 +27,7 @@ upper limits for vertical and horizontal thrust. The vehicle must also
 be with a tilt limit. Exceeding these limits means the vehicle has
 crashed. The lander also crashes if one of its sides collides with
 the surface."
-config/version="1.5.0"
+config/version="1.5.1"
 run/main_scene="res://scenes/start_game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/show_image=false

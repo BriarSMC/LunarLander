@@ -129,6 +129,7 @@ func _on_select_lander_pressed():
 # Set the new level
 func _on_level_item_selected(index):
 	Config.level = $HBoxContainer/Landers/Level.get_item_text(index)
+	display_level_description()
 
 # Custom Signal Callbacks
 
@@ -178,6 +179,13 @@ func load_level_list() -> void:
 		$HBoxContainer/Landers/Level.add_item(i)
 	$HBoxContainer/Landers/Level.select(0)
 	Config.level = "EASY"
+	display_level_description()
 
+
+func display_level_description() -> void:
+	$HBoxContainer/Landers/LevelDescription.text = \
+		"Max Vertical Velocity: " + str(Config.difficulty[Config.level]['MAXV']) + \
+		"\nMax Horizontal Velocity: " + str(Config.difficulty[Config.level]['MAXH']) + \
+		"\nStarting Fuel: " + str(Config.difficulty[Config.level]['FUEL'])
 # Subclasses
 
