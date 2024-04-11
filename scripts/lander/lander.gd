@@ -169,9 +169,9 @@ func _on_detect_landing_body_entered(_body):
 #	If not, emit we have crashed.
 	if (absf(previous_velocity.x) <= max_horizontal_velocity and 
 		absf(previous_velocity.y) <= max_vertical_velocity):
-		emit_signal("lander_landed", previous_velocity)
+		emit_signal("lander_landed")
 	else:
-		emit_signal("lander_crashed", previous_velocity)
+		emit_signal("lander_crashed")
 
 
 # _on_detect_side_contact_body_entered(body)
@@ -196,7 +196,7 @@ func _on_detect_side_contact_body_entered(_body):
 	engines_shutdown = true
 	$Altimeter.graphic_altimeter_requested.emit(false)
 # Step 2
-	emit_signal("lander_crashed", previous_velocity)
+	emit_signal("lander_crashed")
 
 
 # Custom Signal Callbacks
