@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba3mm5o7td31l"
-path="res://.godot/imported/explosion.png-42173277c4d47ed7add7312efcc612d3.ctex"
+uid="uid://c3jst4m5aacyh"
+path="res://.godot/imported/star coin 6.png-6fc6de603b66b27a99441cd0fb3ceaad.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/explosion.png"
-dest_files=["res://.godot/imported/explosion.png-42173277c4d47ed7add7312efcc612d3.ctex"]
+source_file="res://images/collectables/coin/star coin 6.png"
+dest_files=["res://.godot/imported/star coin 6.png-6fc6de603b66b27a99441cd0fb3ceaad.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ra0pwppdahxo"]
 
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="1_yy81h"]
-[ext_resource type="Texture2D" uid="uid://c08cdh6r0bms4" path="res://images/Ground062S_1K-JPG_Color.jpg" id="2_ua6m7"]
+[ext_resource type="Texture2D" uid="uid://c08cdh6r0bms4" path="res://images/textures/Ground062S_1K-JPG_Color.jpg" id="2_y6vms"]
 
 [node name="Terrain" type="StaticBody2D"]
 collision_layer = 8
@@ -10,6 +10,6 @@ script = ExtResource("1_yy81h")
 
 [node name="Poly" type="Polygon2D" parent="."]
 texture_repeat = 2
-texture = ExtResource("2_ua6m7")
+texture = ExtResource("2_y6vms")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

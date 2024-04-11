@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddh8t43u4sdh7"
-path="res://.godot/imported/bigfooinscotland.jpg-85410acd7889cdfb93c87112103b1258.ctex"
+uid="uid://b4sr80kckpmay"
+path="res://.godot/imported/22 TorchDrippingDkBlue .png-e22d46eb00900c0f122b1758cfe18c51.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/bigfooinscotland.jpg"
-dest_files=["res://.godot/imported/bigfooinscotland.jpg-85410acd7889cdfb93c87112103b1258.ctex"]
+source_file="res://images/animations/alotofparticles022/22 TorchDrippingDkBlue .png"
+dest_files=["res://.godot/imported/22 TorchDrippingDkBlue .png-e22d46eb00900c0f122b1758cfe18c51.ctex"]
 
 [params]
 

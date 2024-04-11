@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://txefb7ci023r"
-path="res://.godot/imported/22 TorchDrippingRed .png-9dcfdf1ad4b85093c2f826f2025f74d9.ctex"
+uid="uid://dfr40to2balv6"
+path="res://.godot/imported/22 TorchDrippingGreen .png-d7d5a9c5d6fb599a8ef57e3aa4199008.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/alotofparticles022/22 TorchDrippingRed .png"
-dest_files=["res://.godot/imported/22 TorchDrippingRed .png-9dcfdf1ad4b85093c2f826f2025f74d9.ctex"]
+source_file="res://images/animations/alotofparticles022/22 TorchDrippingGreen .png"
+dest_files=["res://.godot/imported/22 TorchDrippingGreen .png-d7d5a9c5d6fb599a8ef57e3aa4199008.ctex"]
 
 [params]
 

@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://s4scnptdtbjt"]
+[gd_scene load_steps=10 format=3 uid="uid://s4scnptdtbjt"]
 
 [ext_resource type="PackedScene" uid="uid://ra0pwppdahxo" path="res://scenes/terrain.tscn" id="1_l3b7c"]
-[ext_resource type="Texture2D" uid="uid://bp45igdc2ayc4" path="res://images/SpaceBackGround.jpg" id="1_nnc8s"]
 [ext_resource type="Script" path="res://scripts/play_level.gd" id="1_vgelu"]
 [ext_resource type="PackedScene" uid="uid://8sy5ghc53xc1" path="res://scenes/lander.tscn" id="2_agdam"]
+[ext_resource type="Texture2D" uid="uid://bp45igdc2ayc4" path="res://images/backgrounds/SpaceBackGround.jpg" id="2_pjdvx"]
 [ext_resource type="Script" path="res://scripts/camera2d.gd" id="3_ciqlb"]
 [ext_resource type="PackedScene" uid="uid://cqci6ggmavg16" path="res://scenes/hud.tscn" id="4_k5bum"]
 [ext_resource type="Theme" uid="uid://dduospivxw12q" path="res://themes/splash_screen_controls.tres" id="6_1j836"]
 [ext_resource type="Texture2D" uid="uid://clue78wmctbb4" path="res://images/play-145676_640-75x75.png" id="8_fish3"]
+[ext_resource type="PackedScene" uid="uid://2k3jahmm07c0" path="res://scenes/spawner.tscn" id="9_0q2ea"]
 
 [node name="PlayLevel" type="Node2D"]
 process_mode = 3
@@ -16,13 +17,15 @@ script = ExtResource("1_vgelu")
 [node name="Background" type="Polygon2D" parent="."]
 texture_repeat = 2
 color = Color(0.545098, 0.121569, 0.843137, 1)
-texture = ExtResource("1_nnc8s")
+texture = ExtResource("2_pjdvx")
 polygon = PackedVector2Array(-121826, -52465, 129132, -52566, 128422, 58655, -121927, 54291)
 
 [node name="Terrain" parent="." instance=ExtResource("1_l3b7c")]
 process_mode = 3
 
-[node name="Lander" parent="." node_paths=PackedStringArray("hud", "play_level", "terrain", "camera") instance=ExtResource("2_agdam")]
+[node name="SpawnedItems" type="Node2D" parent="."]
+
+[node name="Lander" parent="." node_paths=PackedStringArray("hud", "play_level", "spawner", "terrain", "camera") instance=ExtResource("2_agdam")]
 process_mode = 1
 editor_description = "Lander Custom sObject"
 position = Vector2(1015, -107)
@@ -31,6 +34,7 @@ gravity_scale = 0.167
 directional_thrust = 20.0
 hud = NodePath("../HUD")
 play_level = NodePath("..")
+spawner = NodePath("../Spawner")
 terrain = NodePath("../Terrain")
 camera = NodePath("Camera")
 metadata/_edit_group_ = true
@@ -98,6 +102,9 @@ grow_vertical = 2
 theme = ExtResource("6_1j836")
 icon = ExtResource("8_fish3")
 icon_alignment = 1
+
+[node name="Spawner" parent="." node_paths=PackedStringArray("spawned_items") instance=ExtResource("9_0q2ea")]
+spawned_items = NodePath("../SpawnedItems")
 
 [connection signal="pressed" from="StartGameUI/StartGamePanel/StartGameContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="StartGameUI/Resume" to="." method="_on_resume_pressed"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bp45igdc2ayc4"
-path="res://.godot/imported/SpaceBackGround.jpg-18a2218459abf83c42297c1856ab4ce0.ctex"
+uid="uid://j3ftvlf6vykw"
+path="res://.godot/imported/fuelcell_100x100.png-6afdab9d29cfae3651972d2d98b0b1a2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/SpaceBackGround.jpg"
-dest_files=["res://.godot/imported/SpaceBackGround.jpg-18a2218459abf83c42297c1856ab4ce0.ctex"]
+source_file="res://images/collectables/fuelcell_100x100.png"
+dest_files=["res://.godot/imported/fuelcell_100x100.png-6afdab9d29cfae3651972d2d98b0b1a2.ctex"]
 
 [params]
 

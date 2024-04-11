@@ -10,6 +10,9 @@ enum selected_engine {MAIN, LEFT, RIGHT, ALL}
 
 const zoom_altitude := 200.0
 
+# Paths
+
+const Lander = "/root/PlayLevel/Lander"
 
 # Lander Data
 

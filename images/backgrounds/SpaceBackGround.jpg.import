@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmsuisplb2x3w"
-path="res://.godot/imported/22 TorchDrippingYellow .png-658fe421ed6d39044b883e65e3bf03a8.ctex"
+uid="uid://bp45igdc2ayc4"
+path="res://.godot/imported/SpaceBackGround.jpg-bfeea60de66173edc36384be43e795df.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/alotofparticles022/22 TorchDrippingYellow .png"
-dest_files=["res://.godot/imported/22 TorchDrippingYellow .png-658fe421ed6d39044b883e65e3bf03a8.ctex"]
+source_file="res://images/backgrounds/SpaceBackGround.jpg"
+dest_files=["res://.godot/imported/SpaceBackGround.jpg-bfeea60de66173edc36384be43e795df.ctex"]
 
 [params]
 

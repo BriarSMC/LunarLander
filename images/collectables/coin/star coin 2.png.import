@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfr40to2balv6"
-path="res://.godot/imported/22 TorchDrippingGreen .png-cd83bbccd673c24ff0fb1b5dbf22f7a1.ctex"
+uid="uid://ccpvfmp8jouaq"
+path="res://.godot/imported/star coin 2.png-2e8c8ac7a7d65817c49bfd56620d9e6a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/alotofparticles022/22 TorchDrippingGreen .png"
-dest_files=["res://.godot/imported/22 TorchDrippingGreen .png-cd83bbccd673c24ff0fb1b5dbf22f7a1.ctex"]
+source_file="res://images/collectables/coin/star coin 2.png"
+dest_files=["res://.godot/imported/star coin 2.png-2e8c8ac7a7d65817c49bfd56620d9e6a.ctex"]
 
 [params]
 

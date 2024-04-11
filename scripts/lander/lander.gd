@@ -31,6 +31,7 @@ extends RigidBody2D
 signal reset_level_requested
 signal lander_crashed 
 signal lander_landed 
+signal refuel_requested
 
 # enums
 
@@ -49,10 +50,7 @@ signal lander_landed
 # node to this exposed variable.
 @export var hud: CanvasLayer
 @export var play_level: Node2D
-
-# These are pointers to the lander used by:
-#	Maneuver
-#	EngineFlame
+@export var spawner: Spawner
 @export var terrain: StaticBody2D
 @export var camera: Camera
 
@@ -70,6 +68,8 @@ var fuel_remaining: float
 
 var max_vertical_velocity: float
 var max_horizontal_velocity: float
+
+var fuel_spawned := false
 
 # onready variables
 
@@ -101,6 +101,7 @@ func _ready():
 	reset_level_requested.connect(reset_level)
 	lander_crashed.connect(we_crashed)
 	lander_landed.connect(we_landed)
+	refuel_requested.connect(refuel) 
 	
 	reset_level()
 	load_specs()
@@ -138,7 +139,10 @@ func _physics_process(delta):
 	lander_state = check_lander_state()
 	if lander_state != Constant.lander_states.INFLIGHT:
 		set_game_over_state()
-	
+# Step 4
+	if fuel_remaining < 900.0 and not fuel_spawned:
+		fuel_spawned = true
+		spawner.emit_signal("spawn_fuelcell_requested", position)
 
 # Built-in Signal Callbacks
 
@@ -249,6 +253,20 @@ func we_landed() -> void:
 # Step 3
 	hud.hud_velocity_fuel_changed.emit(previous_velocity, fuel_remaining)
 	
+# refuel(qtr:)
+# Refuel the lander
+#
+# Parameters
+#	qty: float						Amount of fuel to add
+# Return
+#	None
+#==
+# What the code is doing (steps)
+func refuel(qty: float) -> void:
+	fuel_spawned = false
+	fuel_remaining = clamp(fuel_remaining, fuel_remaining + qty, Config.difficulty[Config.level]["FUEL"])
+
+
 # Public Methods
 
 
@@ -332,6 +350,7 @@ func reset_level() -> void:
 	engines_shutdown = false
 	game_over = false
 	fuel_remaining = fuel_on_board
+	fuel_spawned = false
 	
 	$LanderImage.visible = true
 	position = lander_starting_position
