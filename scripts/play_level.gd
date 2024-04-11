@@ -23,6 +23,7 @@ extends Node2D
 
 # private variables
 
+var start_game_scene := preload("res://scenes/start_game.tscn")
 # onready variables
 
 @onready var lander := $Lander
@@ -65,11 +66,15 @@ func _ready():
 #==
 # Is the input the play/pause button?
 # 	If so, toggle the tree's paused stqte and the resume button's visibility
+# Is the input the back button?
+#	If so, just change scenes to StartGame
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("start_pause_game"):			
 		get_tree().paused = not get_tree().paused
 		resume_btn.visible = get_tree().paused
 	
+	if event.is_action_pressed("quit_level"):
+		get_tree().change_scene_to_packed(start_game_scene)
 # Built-in Signal Callbacks
 
 # Turn off the start game panel
