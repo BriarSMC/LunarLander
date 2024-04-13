@@ -9,6 +9,7 @@ enum selected_engine {MAIN, LEFT, RIGHT, ALL}
 # constants
 
 const zoom_altitude := 200.0
+const landing_points := 100
 
 # Paths
 

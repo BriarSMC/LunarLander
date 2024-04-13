@@ -10,6 +10,47 @@ Label/font_sizes/font_size = 27
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_i2qmi")
 
+[node name="Coins" type="PanelContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("2_1fob1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Coins"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Coins/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Coins: "
+
+[node name="CoinCount" type="Label" parent="Coins/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "0
+"
+
+[node name="Score" type="PanelContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme = ExtResource("2_1fob1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Score"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Score/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Score: "
+
+[node name="ScorePoints" type="Label" parent="Score/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "0"
+
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15

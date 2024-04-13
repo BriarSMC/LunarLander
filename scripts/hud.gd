@@ -14,7 +14,7 @@ extends CanvasLayer
 
 # signals
 
-signal hud_velocity_fuel_changed (linear_velocity: Vector2, fuel_on_board: float, coins: int)
+signal hud_changed (linear_velocity: Vector2, fuel_on_board: float, coins: int)
 signal hud_altitude_changed (altitude: float)
 signal hud_gameover_changed (message: String, success: bool)
 signal hud_freeze_requested 
@@ -38,6 +38,8 @@ var active = true
 # onready variables
 
 # Pointers to HUD components
+@onready var cc_value		:= $Coins/HBoxContainer/CoinCount
+@onready var sp_value		:= $Score/HBoxContainer/ScorePoints
 @onready var vvel_value 	:= $UI/Panel/HBoxContainer/Values/VerticalVelocity
 @onready var hvel_value 	:= $UI/Panel/HBoxContainer/Values/HorzontalVelocity
 @onready var fuel_value 	:= $UI/Panel/HBoxContainer/Values/FuelRemaning
@@ -63,7 +65,7 @@ var active = true
 #==
 # Connect to our signal handling functions
 func _ready():
-	hud_velocity_fuel_changed.connect(_new_velocity_fuel_values)
+	hud_changed.connect(_new_values)
 	hud_altitude_changed.connect(_new_altitude)
 	hud_gameover_changed.connect(_gameover)
 	hud_freeze_requested.connect(freeze_hud)
@@ -102,15 +104,21 @@ func _on_quit_pressed():
 # Return
 #	None
 #==
-# Step 1: Determine which arrows to display
+# Step 1:
+# 	Always update coins and score
+# 	Ignore rest if not active
+# Step 2: Determine which arrows to display
 #	The HUD uses UNICODE arrow characters as additional information for the
 #	velocity values. Defaults are set to spaces. We then set the appropriate
 #	UNICODE arrow characters based on the vector values.
-# Step 2: Set the HUD label values to the velocity and fuel
+# Step 3: Set the HUD label values to the velocity and fuel
 #	Append the appropriate UNICODE arrow characters to the velocity values
-func _new_velocity_fuel_values(vel: Vector2, fuel: float, coin: int) -> void:
+func _new_values(vel: Vector2, fuel: float, coin: int, score: int) -> void:
+# Step 1
+	cc_value.text = str(coin)
+	sp_value.text = str(score)	
 	if not active: return
-# Step 1	
+# Step 2
 	var v_dir: int = 32
 	var h_dir: int = 32
 	if vel.y < 0.0: 
@@ -121,11 +129,10 @@ func _new_velocity_fuel_values(vel: Vector2, fuel: float, coin: int) -> void:
 		h_dir = 0x2192
 	else:
 		h_dir = 0x2190
-# Step 2		
+# Step 3		
 	vvel_value.text = ("%6.1f" % absf(vel.y)) + String.chr(v_dir)
 	hvel_value.text = ("%6.1f" % absf(vel.x)) + String.chr(h_dir)
 	fuel_value.text = "%6.1f" % fuel
-
 
 # _new_altitude(alt)
 # Display altitude on the HUD

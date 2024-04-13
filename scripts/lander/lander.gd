@@ -67,6 +67,7 @@ var previous_velocity: Vector2
 var game_over := false
 var fuel_remaining: float
 var coin_count := 0
+var score := 0
 var max_vertical_velocity: float
 var max_horizontal_velocity: float
 
@@ -136,7 +137,7 @@ func _physics_process(delta):
 	else:
 		$Altimeter.graphic_altimeter_requested.emit(false)
 # Step 3
-	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining, coin_count)
+	update_hud()
 # Step 4
 	lander_state = check_lander_state()
 	if lander_state != Constant.lander_states.INFLIGHT:
@@ -230,7 +231,7 @@ func we_crashed() -> void:
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
-	hud.hud_velocity_fuel_changed.emit(previous_velocity, fuel_remaining, coin_count)
+	update_hud()
 	
 	
 # we_landed(vel)
@@ -253,7 +254,8 @@ func we_landed() -> void:
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
-	hud.hud_velocity_fuel_changed.emit(previous_velocity, fuel_remaining, coin_count)
+	score += Constant.landing_points
+	update_hud()
 	
 # refuel(qtr:)
 # Refuel the lander
@@ -316,7 +318,7 @@ func check_lander_state() -> int:
 func set_game_over_state() -> void:
 	if lander_state != Constant.lander_states.LEFTSCREEN and not sleeping:
 			return
-	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining, coin_count)
+	update_hud()
 	sleeping = true # in case if was LEFTSCREEN
 	$LanderImage.visible = false
 	game_over = true
@@ -353,7 +355,6 @@ func reset_level() -> void:
 	game_over = false
 	fuel_remaining = fuel_on_board
 	fuel_spawned = false
-	coin_count = 0
 	
 	$LanderImage.visible = true
 	position = lander_starting_position
@@ -431,4 +432,15 @@ func load_specs() -> void:
 	$Engines/RightThruster.skew = spec["right_thruster"]["skew"]
 	
 	
+# update_hud()
+# Signal HUD to update values
+#
+# Parameters
+#	None
+# Return
+#	None
+#==
+# What the code is doing (steps)
+func update_hud() -> void:
+	hud.hud_changed.emit(previous_velocity, fuel_remaining, coin_count, score)
 
