@@ -14,7 +14,7 @@ extends CanvasLayer
 
 # signals
 
-signal hud_velocity_fuel_changed (linear_velocity: Vector2, fuel_on_board: float)
+signal hud_velocity_fuel_changed (linear_velocity: Vector2, fuel_on_board: float, coins: int)
 signal hud_altitude_changed (altitude: float)
 signal hud_gameover_changed (message: String, success: bool)
 signal hud_freeze_requested 
@@ -108,7 +108,7 @@ func _on_quit_pressed():
 #	UNICODE arrow characters based on the vector values.
 # Step 2: Set the HUD label values to the velocity and fuel
 #	Append the appropriate UNICODE arrow characters to the velocity values
-func _new_velocity_fuel_values(vel: Vector2, fuel: float) -> void:
+func _new_velocity_fuel_values(vel: Vector2, fuel: float, coin: int) -> void:
 	if not active: return
 # Step 1	
 	var v_dir: int = 32

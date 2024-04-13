@@ -34,3 +34,4 @@ var level := "EASY"
 @export var max_segment_length := 120.0
 @export var min_segment_height := 30.0
 @export var max_segment_height := 200.0
+@export var coin_probability := 0.10

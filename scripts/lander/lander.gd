@@ -32,6 +32,7 @@ signal reset_level_requested
 signal lander_crashed 
 signal lander_landed 
 signal refuel_requested
+signal collect_coin_requested
 
 # enums
 
@@ -65,7 +66,7 @@ var engines_shutdown := false
 var previous_velocity: Vector2
 var game_over := false
 var fuel_remaining: float
-
+var coin_count := 0
 var max_vertical_velocity: float
 var max_horizontal_velocity: float
 
@@ -102,6 +103,7 @@ func _ready():
 	lander_crashed.connect(we_crashed)
 	lander_landed.connect(we_landed)
 	refuel_requested.connect(refuel) 
+	collect_coin_requested.connect(func(): coin_count += 1)
 	
 	reset_level()
 	load_specs()
@@ -134,13 +136,13 @@ func _physics_process(delta):
 	else:
 		$Altimeter.graphic_altimeter_requested.emit(false)
 # Step 3
-	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining)
+	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining, coin_count)
 # Step 4
 	lander_state = check_lander_state()
 	if lander_state != Constant.lander_states.INFLIGHT:
 		set_game_over_state()
 # Step 4
-	if fuel_remaining < 900.0 and not fuel_spawned:
+	if fuel_remaining < 0.85 * Config.difficulty[Config.level]["FUEL"] and not fuel_spawned:
 		fuel_spawned = true
 		spawner.emit_signal("spawn_fuelcell_requested", position)
 
@@ -228,7 +230,7 @@ func we_crashed() -> void:
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
-	hud.hud_velocity_fuel_changed.emit(previous_velocity, fuel_remaining)
+	hud.hud_velocity_fuel_changed.emit(previous_velocity, fuel_remaining, coin_count)
 	
 	
 # we_landed(vel)
@@ -251,7 +253,7 @@ func we_landed() -> void:
 # Step 2
 	$Altimeter.altimeter_stopped.emit()
 # Step 3
-	hud.hud_velocity_fuel_changed.emit(previous_velocity, fuel_remaining)
+	hud.hud_velocity_fuel_changed.emit(previous_velocity, fuel_remaining, coin_count)
 	
 # refuel(qtr:)
 # Refuel the lander
@@ -314,7 +316,7 @@ func check_lander_state() -> int:
 func set_game_over_state() -> void:
 	if lander_state != Constant.lander_states.LEFTSCREEN and not sleeping:
 			return
-	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining)
+	hud.emit_signal("hud_velocity_fuel_changed", previous_velocity, fuel_remaining, coin_count)
 	sleeping = true # in case if was LEFTSCREEN
 	$LanderImage.visible = false
 	game_over = true
@@ -351,6 +353,7 @@ func reset_level() -> void:
 	game_over = false
 	fuel_remaining = fuel_on_board
 	fuel_spawned = false
+	coin_count = 0
 	
 	$LanderImage.visible = true
 	position = lander_starting_position

@@ -20,8 +20,9 @@ color = Color(0.545098, 0.121569, 0.843137, 1)
 texture = ExtResource("2_pjdvx")
 polygon = PackedVector2Array(-121826, -52465, 129132, -52566, 128422, 58655, -121927, 54291)
 
-[node name="Terrain" parent="." instance=ExtResource("1_l3b7c")]
+[node name="Terrain" parent="." node_paths=PackedStringArray("spawner") instance=ExtResource("1_l3b7c")]
 process_mode = 3
+spawner = NodePath("../Spawner")
 
 [node name="SpawnedItems" type="Node2D" parent="."]
 

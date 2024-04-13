@@ -12,7 +12,7 @@ const zoom_altitude := 200.0
 
 # Paths
 
-const Lander = "/root/PlayLevel/Lander"
+const lander = "/root/PlayLevel/Lander"
 
 # Lander Data
 

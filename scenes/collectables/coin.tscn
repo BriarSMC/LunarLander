@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dooibcurp1u5g"]
+[gd_scene load_steps=10 format=3 uid="uid://dooibcurp1u5g"]
 
 [ext_resource type="Texture2D" uid="uid://de0a3q5kaq611" path="res://images/collectables/coin/star coin 1.png" id="1_01p1s"]
 [ext_resource type="Texture2D" uid="uid://ccpvfmp8jouaq" path="res://images/collectables/coin/star coin 2.png" id="2_8sd5w"]
@@ -6,8 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://5q1et8vpiegw" path="res://images/collectables/coin/star coin 4.png" id="4_fbfry"]
 [ext_resource type="Texture2D" uid="uid://nvo5qg1gvdpw" path="res://images/collectables/coin/star coin 5.png" id="5_8k87e"]
 [ext_resource type="Texture2D" uid="uid://c3jst4m5aacyh" path="res://images/collectables/coin/star coin 6.png" id="6_iju2d"]
+[ext_resource type="Script" path="res://scripts/coin.gd" id="7_acmqu"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_prrur"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_plxrg"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -29,22 +30,24 @@ animations = [{
 "texture": ExtResource("6_iju2d")
 }],
 "loop": true,
-"name": &"coin",
-"speed": 8.0
+"name": &"coinflash",
+"speed": 6.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0kmyw"]
-radius = 10.8167
+radius = 1104.54
 
-[node name="Coin" type="Node2D"]
-
-[node name="CoinImage" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.01, 0.01)
-sprite_frames = SubResource("SpriteFrames_prrur")
-animation = &"coin"
-frame_progress = 0.0928965
+[node name="Coin" type="AnimatedSprite2D"]
+scale = Vector2(0.02, 0.02)
+sprite_frames = SubResource("SpriteFrames_plxrg")
+animation = &"coinflash"
+autoplay = "coinflash"
+frame_progress = 0.53834
+script = ExtResource("7_acmqu")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_0kmyw")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
