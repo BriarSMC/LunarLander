@@ -25,6 +25,7 @@ signal hud_freeze_requested
 
 # exports (The following properties must be set in the Inspector by the designer)
 
+@export var play_level: PlayLevel
 @export var lander: Lander
 @export var game_over_leave_on_screen_time := 1.0
 @export var buttons_display_delay_time := 0.4
@@ -187,14 +188,7 @@ func _gameover(message: String, success: bool = false) -> void:
 	play_again.grab_focus()
 	
 
-# start_new_game()
-# Start a new game
-#
-# Parameters
-#	None
-# Return
-#	None
-#==
+
 # Switch to the play level scene
 func start_new_game() -> void:
 	buttons.visible = false
@@ -202,16 +196,14 @@ func start_new_game() -> void:
 	active = true
 	lander.reset_level_requested.emit()
 
+
+# Go back to start screen
+func _on_go_back_pressed():
+	play_level.emit_signal("quit_level_requested")	
 	
-# exit_game()
-# Exit the game
-#
-# Parameters
-#	None
-# Return
-#	None
-#==
-# TTFN
+	
+	
+# Exit application
 func exit_game() -> void:
 	get_tree().quit()
 	
@@ -230,4 +222,5 @@ func freeze_hud() -> void:
 
 	
 # Subclasses
+
 

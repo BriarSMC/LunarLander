@@ -13,6 +13,8 @@ extends Node2D
 
 # signals
 
+signal quit_level_requested
+
 # enums
 
 # constants
@@ -48,6 +50,7 @@ var start_game_scene := preload("res://scenes/start_game.tscn")
 # Don't display resume button
 # Start the level off paused
 func _ready():
+	quit_level_requested.connect(func(): get_tree().change_scene_to_packed(start_game_scene))
 	display_new_start_values()
 	start_btn.grab_focus()
 	resume_btn.visible = false

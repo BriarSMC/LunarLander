@@ -43,8 +43,11 @@ metadata/_edit_group_ = true
 [node name="Camera" type="Camera2D" parent="Lander"]
 script = ExtResource("3_ciqlb")
 
-[node name="HUD" parent="." node_paths=PackedStringArray("lander") instance=ExtResource("4_k5bum")]
+[node name="HUD" parent="." node_paths=PackedStringArray("play_level", "lander") instance=ExtResource("4_k5bum")]
+play_level = NodePath("..")
 lander = NodePath("../Lander")
+game_over_leave_on_screen_time = 1.0
+buttons_display_delay_time = 0.4
 
 [node name="StartGameUI" type="CanvasLayer" parent="."]
 process_mode = 3

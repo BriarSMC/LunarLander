@@ -1,4 +1,4 @@
-class_name SplashScreenUI
+class_name StartGame
 extends CanvasLayer
 
 
