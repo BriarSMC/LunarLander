@@ -107,7 +107,7 @@ func _ready():
 	collect_coin_requested.connect(func(): coin_count += 1)
 	
 	reset_level()
-	load_specs()
+	Config.load_specs(self)
 
 
 # _physics_process(delta)
@@ -376,61 +376,7 @@ func reset_level() -> void:
 # Return
 #	None
 #==
-func load_specs() -> void:
-	var spec = Constant.lander_spec[str(int(Config.lander_type))]
-	$LanderImage.texture = load("res://images/landers/" + spec["image"]["texture"])
-	$LanderImage.scale = Vector2(spec["image"]["scale"], spec["image"]["scale"])
-	
-	$BodyCollider.shape.size.x = spec["body_collider"]["size"].x
-	$BodyCollider.shape.size.y = spec["body_collider"]["size"].y
-	$BodyCollider.position = spec["body_collider"]["position"]
-	$BodyCollider.rotation = deg_to_rad(spec["body_collider"]["rotation"])
-	$BodyCollider.scale = Vector2(spec["body_collider"]["scale"],spec["body_collider"]["scale"])
-	$BodyCollider.skew = spec["body_collider"]["skew"]
 
-	$LeftStrutCollider.shape.size.x = spec["left_strut_collider"]["size"].x
-	$LeftStrutCollider.shape.size.y = spec["left_strut_collider"]["size"].y
-	$LeftStrutCollider.position = spec["left_strut_collider"]["position"]
-	$LeftStrutCollider.rotation = deg_to_rad(spec["left_strut_collider"]["rotation"])
-	$LeftStrutCollider.scale = Vector2(spec["left_strut_collider"]["scale"],spec["left_strut_collider"]["scale"])
-	$LeftStrutCollider.skew = spec["left_strut_collider"]["skew"]
-
-	$RightStrutCollider.shape.size.x = spec["right_strut_collider"]["size"].x
-	$RightStrutCollider.shape.size.y = spec["right_strut_collider"]["size"].y
-	$RightStrutCollider.position = spec["right_strut_collider"]["position"]
-	$RightStrutCollider.rotation = deg_to_rad(spec["right_strut_collider"]["rotation"])
-	$RightStrutCollider.scale = Vector2(spec["right_strut_collider"]["scale"],spec["right_strut_collider"]["scale"])
-	$RightStrutCollider.skew = spec["right_strut_collider"]["skew"]
-
-	$DetectLanding/Struts.shape.size.x = spec["detect_landing"]["size"].x
-	$DetectLanding/Struts.shape.size.y = spec["detect_landing"]["size"].y
-	$DetectLanding/Struts.position = spec["detect_landing"]["position"]
-	$DetectLanding/Struts.rotation = deg_to_rad(spec["detect_landing"]["rotation"])
-	$DetectLanding/Struts.scale = Vector2(spec["detect_landing"]["scale"],spec["detect_landing"]["scale"])
-	$DetectLanding/Struts.skew = spec["detect_landing"]["skew"]
-
-	$DetectSideContact/Sides.shape.size.x = spec["detect_side_collision"]["size"].x
-	$DetectSideContact/Sides.shape.size.y = spec["detect_side_collision"]["size"].y
-	$DetectSideContact/Sides.position = spec["detect_side_collision"]["position"]
-	$DetectSideContact/Sides.rotation = deg_to_rad(spec["detect_side_collision"]["rotation"])
-	$DetectSideContact/Sides.scale = Vector2(spec["detect_side_collision"]["scale"],spec["detect_side_collision"]["scale"])
-	$DetectSideContact/Sides.skew = spec["detect_side_collision"]["skew"]
-	
-	$Engines/MainEngine.position = spec["main_engine"]["position"]
-	$Engines/MainEngine.rotation = deg_to_rad(spec["main_engine"]["rotation"])
-	$Engines/MainEngine.scale = Vector2(spec["main_engine"]["scale"],spec["main_engine"]["scale"])
-	$Engines/MainEngine.skew = spec["main_engine"]["skew"]
-	
-	$Engines/LeftThruster.position = spec["left_thruster"]["position"]
-	$Engines/LeftThruster.rotation = deg_to_rad(spec["left_thruster"]["rotation"])
-	$Engines/LeftThruster.scale = Vector2(spec["left_thruster"]["scale"],spec["left_thruster"]["scale"])
-	$Engines/LeftThruster.skew = spec["left_thruster"]["skew"]
-	
-	$Engines/RightThruster.position = spec["right_thruster"]["position"]
-	$Engines/RightThruster.rotation = deg_to_rad(spec["right_thruster"]["rotation"])
-	$Engines/RightThruster.scale = Vector2(spec["right_thruster"]["scale"],spec["right_thruster"]["scale"])
-	$Engines/RightThruster.skew = spec["right_thruster"]["skew"]
-	
 	
 # update_hud()
 # Signal HUD to update values
