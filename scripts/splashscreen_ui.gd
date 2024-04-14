@@ -57,6 +57,12 @@ func _ready() -> void:
 	$HBoxContainer/Menu/StartGame.grab_focus()
 	$VersionNumber.text = version_number + "\t\n\n"
 	load_level_list()
+	Audioplayer.start_screen_music(true)
+	
+
+func _exit_tree():
+	Audioplayer.start_screen_music(false)
+	
 	
 # _input(event)
 # Process input events

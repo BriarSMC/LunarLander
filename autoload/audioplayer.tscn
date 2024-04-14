@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cd48i0utjuvyu"]
+[gd_scene load_steps=7 format=3 uid="uid://cd48i0utjuvyu"]
 
 [ext_resource type="Script" path="res://autoload/audioplayer.gd" id="1_olvps"]
 [ext_resource type="AudioStream" uid="uid://dy0ejawxp28pl" path="res://audio/rocket_engine.wav" id="2_ag8fj"]
 [ext_resource type="AudioStream" uid="uid://ln0y0ijnj7qr" path="res://audio/thrusters.wav" id="3_ggys2"]
 [ext_resource type="AudioStream" uid="uid://ux5rc8bv8khl" path="res://audio/Retro Explosion Short 15.wav" id="4_cuvri"]
+[ext_resource type="AudioStream" uid="uid://c85sn6cqvg3l4" path="res://audio/Ludum Dare 38 - 09.ogg" id="5_dry2n"]
+[ext_resource type="AudioStream" uid="uid://cf6a6samubayr" path="res://audio/Ludum Dare 30 - 04.ogg" id="5_ll4px"]
 
 [node name="Audioplayer" type="Node2D"]
 script = ExtResource("1_olvps")
@@ -16,3 +18,11 @@ stream = ExtResource("3_ggys2")
 
 [node name="ExplosionPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_cuvri")
+
+[node name="StartScreenPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ll4px")
+volume_db = -10.0
+
+[node name="PlayLevelPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_dry2n")
+volume_db = -10.0

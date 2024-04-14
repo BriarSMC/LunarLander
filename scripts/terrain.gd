@@ -69,7 +69,7 @@ func _ready() -> void:
 # Yep. We decided on the quick and dirty instead of adding another layer of 
 # signals to generate the coins/terrain/etc.
 # Generate the terrain and coins in the first frame and ignore it thereafter.
-func _process(delta):
+func _process(_delta):
 	if generate_terrain:
 		generate_terrain = false
 		new_terrain()

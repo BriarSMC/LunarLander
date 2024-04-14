@@ -52,7 +52,11 @@ func _ready():
 	start_btn.grab_focus()
 	resume_btn.visible = false
 	get_tree().paused = true
+	Audioplayer.play_level_music(true)
 
+
+func _exit_tree():
+	Audioplayer.play_level_music(false)
 
 # _input(event)
 # Capture inputs
