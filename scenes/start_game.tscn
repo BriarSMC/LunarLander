@@ -44,7 +44,7 @@ anchor_top = 0.2
 anchor_right = 0.5
 anchor_bottom = 0.2
 offset_left = -138.0
-offset_top = -120.0
+offset_top = -100.0
 offset_right = 138.0
 offset_bottom = 120.0
 grow_horizontal = 2
@@ -92,18 +92,25 @@ layout_mode = 2
 texture_normal = ExtResource("5_jncwv")
 stretch_mode = 3
 
-[node name="Label2" type="Label" parent="UI/HBoxContainer/Landers"]
+[node name="VSeparator2" type="VSeparator" parent="UI/HBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-theme = ExtResource("3_bnn0c")
-text = "Choose Difficulty"
 
-[node name="Level" type="ItemList" parent="UI/HBoxContainer/Landers"]
+[node name="Difficulty" type="VBoxContainer" parent="UI/HBoxContainer"]
+layout_mode = 2
+
+[node name="Level" type="ItemList" parent="UI/HBoxContainer/Difficulty"]
 layout_mode = 2
 auto_height = true
 item_count = 1
 item_0/text = "Placeholder"
 
-[node name="LevelDescription" type="Label" parent="UI/HBoxContainer/Landers"]
+[node name="Label2" type="Label" parent="UI/HBoxContainer/Difficulty"]
+layout_mode = 2
+theme = ExtResource("3_bnn0c")
+text = "Choose Difficulty"
+
+[node name="LevelDescription" type="Label" parent="UI/HBoxContainer/Difficulty"]
 layout_mode = 2
 
 [node name="VersionNumber" type="Label" parent="UI"]
@@ -124,4 +131,4 @@ vertical_alignment = 1
 [connection signal="focus_entered" from="UI/HBoxContainer/Landers/SelectLander" to="UI" method="_on_select_lander_focus_entered"]
 [connection signal="mouse_exited" from="UI/HBoxContainer/Landers/SelectLander" to="UI" method="_on_select_lander_mouse_exited"]
 [connection signal="pressed" from="UI/HBoxContainer/Landers/SelectLander" to="UI" method="_on_select_lander_pressed"]
-[connection signal="item_selected" from="UI/HBoxContainer/Landers/Level" to="UI" method="_on_level_item_selected"]
+[connection signal="item_selected" from="UI/HBoxContainer/Difficulty/Level" to="UI" method="_on_level_item_selected"]

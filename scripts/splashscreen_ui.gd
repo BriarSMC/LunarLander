@@ -128,7 +128,7 @@ func _on_select_lander_pressed():
 
 # Set the new level
 func _on_level_item_selected(index):
-	Config.level = $HBoxContainer/Landers/Level.get_item_text(index)
+	Config.level = $HBoxContainer/Difficulty/Level.get_item_text(index)
 	display_level_description()
 
 # Custom Signal Callbacks
@@ -174,16 +174,16 @@ func exit_game() -> void:
 #==
 # What the code is doing (steps)
 func load_level_list() -> void:
-	$HBoxContainer/Landers/Level.clear()
+	$HBoxContainer/Difficulty/Level.clear()
 	for i in Config.difficulty.keys():
-		$HBoxContainer/Landers/Level.add_item(i)
-	$HBoxContainer/Landers/Level.select(0)
+		$HBoxContainer/Difficulty/Level.add_item(i)
+	$HBoxContainer/Difficulty/Level.select(0)
 	Config.level = "EASY"
 	display_level_description()
 
 
 func display_level_description() -> void:
-	$HBoxContainer/Landers/LevelDescription.text = \
+	$HBoxContainer/Difficulty/LevelDescription.text = \
 		"Max Vertical Velocity: " + str(Config.difficulty[Config.level]['MAXV']) + \
 		"\nMax Horizontal Velocity: " + str(Config.difficulty[Config.level]['MAXH']) + \
 		"\nStarting Fuel: " + str(Config.difficulty[Config.level]['FUEL'])
